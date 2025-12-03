@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAY54 • Login</title>
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/auth.css" />
+  <script defer src="src/js/login.js"></script>
+  <script defer src="src/js/pinToggle.js"></script>
+</head>
+
+<body class="auth-shell">
+
+  <header class="auth-header">
+    <img src="assets/pay54-logo.svg" class="auth-logo" alt="PAY54" />
+    <span class="auth-version">v6.5.2 • SmartWallet</span>
+  </header>
+
+  <main class="auth-main">
+
+    <div class="auth-card">
+      <h1 class="auth-heading">Welcome back 👋</h1>
+      <p class="auth-subheading">Login to your PAY54 SmartWallet</p>
+
+      <form id="loginForm" class="auth-form">
+        <div class="form-row">
+          <label>Email or phone</label>
+          <input id="loginIdentifier" type="text" placeholder="you@pay54.app or +2348012345678" required />
+        </div>
+
+        <div class="form-row">
+          <label>4-digit PIN</label>
+          <div class="pin-wrapper">
+            <input id="loginPin" type="password" maxlength="4" required />
+            <span class="pin-eye" onclick="togglePin('loginPin', this)">👁</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" type="submit">Sign in</button>
+
+        <p class="auth-footnote">
+          New to PAY54? <a href="signup.html">Create an account</a>
+        </p>
+      </form>
+    </div>
+
+    <div class="auth-side">
+      <h2>Why PAY54?</h2>
+      <ul class="auth-benefits">
+        <li>⚡ Instant P2P with @paytags</li>
+        <li>💳 Virtual + linked cards</li>
+        <li>🌍 NGN wallet with smart FX rails</li>
+        <li>🛡 AI risk watch</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer class="auth-footer">
+    <span>© 2025 PAY54 SmartWallet</span>
+  </footer>
+
+</body>
+</html>

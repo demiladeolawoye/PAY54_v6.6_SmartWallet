@@ -1,0 +1,181 @@
+/* ============================================
+   PAY54 v6.5.1 — AUTHENTICATION UI MASTER CSS
+   Applies to login.html + signup.html
+   ============================================ */
+
+/* --- SHELL LAYOUT --- */
+
+.auth-shell {
+  background: var(--pay54-bg-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- HEADER + FOOTER --- */
+
+.auth-header,
+.auth-footer {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-logo {
+  height: 38px;
+  opacity: 0.95;
+}
+
+/* --- MAIN SECTION --- */
+
+.auth-main {
+  flex: 1;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.8rem 1.2rem 2.6rem;
+  text-align: center;
+}
+
+/* --- TITLES --- */
+
+.auth-title {
+  font-size: 1.55rem;
+  margin-bottom: 0.45rem;
+  color: var(--pay54-text-main);
+}
+
+.auth-subtitle {
+  font-size: 0.92rem;
+  color: var(--pay54-text-muted);
+  margin-bottom: 1.6rem;
+}
+
+/* --- AUTH FORM --- */
+
+.auth-form {
+  background: rgba(2, 6, 23, 0.65);
+  padding: 1.6rem 1.3rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  backdrop-filter: blur(6px);
+  text-align: left;
+}
+
+.auth-form .form-row {
+  margin-bottom: 1rem;
+}
+
+.auth-form label {
+  display: block;
+  font-size: 0.82rem;
+  margin-bottom: 0.3rem;
+  color: var(--pay54-text-main);
+}
+
+/* --- INPUTS --- */
+
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: var(--pay54-bg-card);
+  color: var(--pay54-text-main);
+  padding: 0.55rem 0.65rem;
+  font-size: 0.92rem;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--pay54-blue);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+/* --- PIN TOGGLE (eye icon) --- */
+
+.pin-wrapper {
+  position: relative;
+}
+
+.pin-eye {
+  position: absolute;
+  right: 10px;
+  top: 36px;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: 0.2s ease;
+}
+
+.pin-eye:hover {
+  opacity: 1;
+}
+
+/* --- BUTTON --- */
+
+.auth-btn {
+  width: 100%;
+  background: var(--pay54-blue);
+  border: none;
+  color: white;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  margin-top: 0.6rem;
+  transition: 0.2s ease-out;
+}
+
+.auth-btn:hover {
+  background: #1e40af;
+}
+
+/* --- SWITCH TEXT --- */
+
+.auth-switch {
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  color: var(--pay54-text-muted);
+}
+
+.auth-switch a {
+  color: var(--pay54-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+/* --- FOOTER --- */
+
+.auth-footer {
+  font-size: 0.8rem;
+  color: var(--pay54-text-muted);
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+  margin-top: 2rem;
+}
+
+.auth-footer a {
+  color: var(--pay54-blue);
+}
+
+/* --- MOBILE RESPONSIVE --- */
+
+@media (max-width: 600px) {
+  .auth-form {
+    padding: 1.2rem 1rem;
+  }
+  .auth-title {
+    font-size: 1.35rem;
+  }
+  .auth-main {
+    padding: 1.2rem 0.8rem 2.2rem;
+  }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAY54 • SmartWallet Login</title>
+
+    <link rel="stylesheet" href="src/css/global.css">
+    <link rel="stylesheet" href="src/css/auth.css">
+
+    <style>
+        body {
+            background: #0a0f24;
+            color: white;
+            font-family: Inter, sans-serif;
+            padding: 20px;
+        }
+        .auth-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 25px;
+            background: #111830;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            margin-top: 6px;
+            background: #0d1428;
+            color: white;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #1f6bff;
+            border: none;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+        }
+        a { color: #4ea3ff; }
+    </style>
+</head>
+
+<body>
+
+<div class="auth-container">
+    <h2>Welcome back 👋</h2>
+    <p>Sign in to your PAY54 SmartWallet to send, save, pay bills and shop on the fly.</p>
+
+    <form id="loginForm" class="auth-form">
+        <label>Email or phone</label>
+        <input id="loginIdentifier" type="text" placeholder="you@pay54.app or +2348012345678" required>
+
+        <label>4-digit wallet PIN</label>
+        <input id="loginPin" type="password" maxlength="4" required>
+
+        <button type="submit">Sign in to PAY54</button>
+
+        <p style="text-align:center; margin-top:10px;">
+            New to PAY54? <a href="signup.html">Create an account</a>
+        </p>
+    </form>
+</div>
+
+<script src="src/js/login.js"></script>
+</body>
+</html>

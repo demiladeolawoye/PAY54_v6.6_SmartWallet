@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verify Your PAY54 Account</title>
+<link rel="stylesheet" href="src/css/auth.css">
+</head>
+
+<body class="auth-body">
+
+<div class="auth-container">
+    <h2>Verify your account</h2>
+    <p>Enter the 6-digit code sent to your email/phone.</p>
+
+    <form id="verifyForm" class="auth-form">
+        <div class="form-row">
+            <label>Verification Code</label>
+            <input id="otpInput" type="number" maxlength="6" placeholder="123456" required>
+        </div>
+
+        <button class="auth-btn">Verify</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("verifyForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const userOTP = document.getElementById("otpInput").value.trim();
+    const realOTP = localStorage.getItem("pay54_otp");
+
+    if (userOTP === realOTP) {
+        window.location.href = "dashboard.html";
+    } else {
+        alert("Incorrect OTP. Try again.");
+    }
+});
+</script>
+
+</body>
+</html>

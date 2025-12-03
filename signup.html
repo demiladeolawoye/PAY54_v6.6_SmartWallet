@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAY54 • Create Account</title>
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/auth.css" />
+  <script defer src="src/js/signup.js"></script>
+  <script defer src="src/js/pinToggle.js"></script>
+</head>
+
+<body class="auth-shell">
+
+  <header class="auth-header">
+    <img src="assets/pay54-logo.svg" class="auth-logo" alt="PAY54" />
+    <span class="auth-version">v6.5.2 • SmartWallet</span>
+  </header>
+
+  <main class="auth-main">
+
+    <div class="auth-card">
+      <h1 class="auth-heading">Create your PAY54 account</h1>
+      <p class="auth-subheading">Sign up to send, save, shop & invest globally.</p>
+
+      <form id="signupForm" class="auth-form">
+        
+        <div class="form-row">
+          <label>Full Name</label>
+          <input id="signupName" type="text" required placeholder="Your full name" />
+        </div>
+
+        <div class="form-row">
+          <label>Email or phone</label>
+          <input id="signupIdentifier" type="text" required placeholder="you@pay54.app or +2348012345678" />
+        </div>
+
+        <div class="form-row">
+          <label>Create 4-digit PIN</label>
+          <div class="pin-wrapper">
+            <input id="signupPin" type="password" maxlength="4" required />
+            <span class="pin-eye" onclick="togglePin('signupPin', this)">👁</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Confirm PIN</label>
+          <div class="pin-wrapper">
+            <input id="signupConfirmPin" type="password" maxlength="4" required />
+            <span class="pin-eye" onclick="togglePin('signupConfirmPin', this)">👁</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" type="submit">Create Account</button>
+
+        <p class="auth-footnote">
+          Already on PAY54? <a href="login.html">Login</a>
+        </p>
+
+      </form>
+    </div>
+
+    <div class="auth-side">
+      <h2>Why people love PAY54</h2>
+      <ul class="auth-benefits">
+        <li>🌍 Global cross-border rails</li>
+        <li>🔗 One wallet for all payments</li>
+        <li>🛒 Shop on the fly</li>
+        <li>📊 Smart spend analytics</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer class="auth-footer">
+    <span>© 2025 PAY54 SmartWallet</span>
+  </footer>
+
+</body>
+</html>

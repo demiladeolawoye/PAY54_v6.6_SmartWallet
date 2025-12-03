@@ -1,73 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAY54 • SmartWallet Login</title>
+  <meta charset="UTF-8" />
+  <title>PAY54 • Sign in</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="src/css/global.css">
-    <link rel="stylesheet" href="src/css/auth.css">
-
-    <style>
-        body {
-            background: #0a0f24;
-            color: white;
-            font-family: Inter, sans-serif;
-            padding: 20px;
-        }
-        .auth-container {
-            max-width: 400px;
-            margin: auto;
-            padding: 25px;
-            background: #111830;
-            border-radius: 12px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.3);
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            margin-top: 6px;
-            background: #0d1428;
-            color: white;
-        }
-        button {
-            width: 100%;
-            padding: 14px;
-            background: #1f6bff;
-            border: none;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-size: 16px;
-            color: white;
-            cursor: pointer;
-        }
-        a { color: #4ea3ff; }
-    </style>
+  <!-- Core styles -->
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/auth.css" />
 </head>
+<body class="theme-dark">
+  <div class="auth-shell">
+    <!-- HEADER -->
+    <header class="auth-header">
+      <div class="brand-mark">
+        <div class="brand-shield">P54</div>
+        <div class="brand-text-block">
+          <div class="brand-row">
+            <span class="brand-name">PAY54</span>
+            <span class="version-pill">v6.5.2</span>
+          </div>
+          <span class="brand-tagline">Hybrid Money • NG + Global</span>
+        </div>
+      </div>
 
-<body>
+      <div class="auth-header-right">
+        <span class="auth-version">Smart Wallet Preview • QA Build</span>
+      </div>
+    </header>
 
-<div class="auth-container">
-    <h2>Welcome back 👋</h2>
-    <p>Sign in to your PAY54 SmartWallet to send, save, pay bills and shop on the fly.</p>
-
-    <form id="loginForm" class="auth-form">
-        <label>Email or phone</label>
-        <input id="loginIdentifier" type="text" placeholder="you@pay54.app or +2348012345678" required>
-
-        <label>4-digit wallet PIN</label>
-        <input id="loginPin" type="password" maxlength="4" required>
-
-        <button type="submit">Sign in to PAY54</button>
-
-        <p style="text-align:center; margin-top:10px;">
-            New to PAY54? <a href="signup.html">Create an account</a>
+    <!-- MAIN -->
+    <main class="auth-main">
+      <!-- LEFT: LOGIN CARD -->
+      <section class="auth-card">
+        <h1 class="auth-heading">Welcome back 👋</h1>
+        <p class="auth-subheading">
+          Sign in with your email or phone and wallet PIN to open PAY54.
         </p>
-    </form>
-</div>
 
-<script src="src/js/login.js"></script>
+        <form id="loginForm" class="auth-form" novalidate>
+          <!-- Identifier -->
+          <div class="form-row">
+            <label for="loginIdentifier">Email or phone</label>
+            <input
+              id="loginIdentifier"
+              name="identifier"
+              type="text"
+              autocomplete="username"
+              placeholder="you@pay54.app or +2348012345678"
+              required
+            />
+          </div>
+
+          <!-- PIN -->
+          <div class="form-row">
+            <label for="loginPin">Wallet PIN</label>
+            <div class="pin-wrapper">
+              <input
+                id="loginPin"
+                name="pin"
+                type="password"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                maxlength="4"
+                autocomplete="current-password"
+                placeholder="4-digit PIN"
+                required
+              />
+              <button
+                type="button"
+                class="pin-toggle"
+                data-target="loginPin"
+                aria-label="Show or hide PIN"
+              >
+                👁
+              </button>
+            </div>
+          </div>
+
+          <!-- Row: remember + forgot -->
+          <div class="form-row-inline">
+            <label class="checkbox">
+              <input type="checkbox" id="rememberMe" />
+              <span>Keep me signed in</span>
+            </label>
+            <button type="button" class="btn-link" id="forgotPinBtn">
+              Forgot PIN?
+            </button>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-row">
+            <button type="submit" class="btn btn-primary btn-full">
+              <span>Sign in to PAY54</span>
+            </button>
+          </div>
+
+          <!-- Footnote -->
+          <p class="auth-footnote">
+            New to PAY54?
+            <a href="signup.html">Create an account</a>
+          </p>
+        </form>
+      </section>
+
+      <!-- RIGHT: SIDE PANEL -->
+      <aside class="auth-side">
+        <h2>Why PAY54?</h2>
+        <ul class="auth-benefits">
+          <li>💸 Instant P2P transfers (email or phone)</li>
+          <li>💡 Bills, airtime, data & TV in one wallet</li>
+          <li>🌍 FX preview for NG → US/UK/EU</li>
+          <li>💳 Virtual & linked cards with controls</li>
+          <li>🤖 AI Risk Watch flags suspicious behaviour</li>
+        </ul>
+      </aside>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="auth-footer">
+      <span>© PAY54 Smart Wallet Preview</span>
+      <div class="auth-footer-links">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Support</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast on auth screens -->
+  <div id="authToast" class="toast" style="display:none;"></div>
+
+  <!-- JS -->
+  <script src="src/js/login.js"></script>
 </body>
 </html>

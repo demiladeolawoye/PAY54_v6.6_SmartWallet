@@ -2,64 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PAY54 • Login</title>
+  <title>PAY54 — Sign in</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Core styles -->
   <link rel="stylesheet" href="src/css/global.css" />
   <link rel="stylesheet" href="src/css/auth.css" />
-  <script defer src="src/js/login.js"></script>
-  <script defer src="src/js/pinToggle.js"></script>
 </head>
-
-<body class="auth-shell">
-
-  <header class="auth-header">
-    <img src="assets/pay54-logo.svg" class="auth-logo" alt="PAY54" />
-    <span class="auth-version">v6.5.2 • SmartWallet</span>
-  </header>
-
-  <main class="auth-main">
-
-    <div class="auth-card">
-      <h1 class="auth-heading">Welcome back 👋</h1>
-      <p class="auth-subheading">Login to your PAY54 SmartWallet</p>
-
-      <form id="loginForm" class="auth-form">
-        <div class="form-row">
-          <label>Email or phone</label>
-          <input id="loginIdentifier" type="text" placeholder="you@pay54.app or +2348012345678" required />
+<body class="dark-mode">
+  <div class="auth-shell">
+    <!-- TOP BAR -->
+    <header class="auth-header">
+      <div class="brand-mark">
+        <div class="brand-shield">
+          P54
         </div>
-
-        <div class="form-row">
-          <label>4-digit PIN</label>
-          <div class="pin-wrapper">
-            <input id="loginPin" type="password" maxlength="4" required />
-            <span class="pin-eye" onclick="togglePin('loginPin', this)">👁</span>
+        <div class="brand-text-block">
+          <div>
+            <span class="brand-name">PAY54</span>
           </div>
+          <span class="brand-tagline">Hybrid Money • NG + Global</span>
         </div>
+      </div>
 
-        <button class="btn-primary" type="submit">Sign in</button>
+      <div class="auth-version">
+        v6.5.2 • Smart Wallet
+      </div>
+    </header>
 
-        <p class="auth-footnote">
-          New to PAY54? <a href="signup.html">Create an account</a>
+    <!-- MAIN -->
+    <main class="auth-main">
+      <!-- LEFT: LOGIN CARD -->
+      <section class="auth-card">
+        <h1 class="auth-heading">Welcome back 👋</h1>
+        <p class="auth-subheading">
+          Sign in to continue moving money with PAY54.
         </p>
-      </form>
-    </div>
 
-    <div class="auth-side">
-      <h2>Why PAY54?</h2>
-      <ul class="auth-benefits">
-        <li>⚡ Instant P2P with @paytags</li>
-        <li>💳 Virtual + linked cards</li>
-        <li>🌍 NGN wallet with smart FX rails</li>
-        <li>🛡 AI risk watch</li>
-      </ul>
-    </div>
+        <form id="loginForm" class="auth-form" novalidate>
+          <div class="form-row">
+            <label for="loginIdentifier">Email, phone or PayTag</label>
+            <input
+              id="loginIdentifier"
+              name="identifier"
+              type="text"
+              autocomplete="username"
+              placeholder="you@pay54.app, +2348012345678 or @yourtag"
+              required
+            />
+          </div>
 
-  </main>
+          <div class="form-row password-row">
+            <label for="loginPin">4-digit wallet PIN</label>
+            <div class="password-wrapper">
+              <input
+                id="loginPin"
+                name="pin"
+                type="password"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                maxlength="4"
+                autocomplete="current-password"
+                placeholder="••••"
+                required
+              />
+              <button
+                type="button"
+                class="eye-toggle"
+                data-target="loginPin"
+                aria-label="Show or hide PIN"
+              >👁</button>
+            </div>
+          </div>
 
-  <footer class="auth-footer">
-    <span>© 2025 PAY54 SmartWallet</span>
-  </footer>
+          <div class="form-row-inline">
+            <label class="checkbox">
+              <input type="checkbox" id="rememberMe" />
+              <span>Remember this device</span>
+            </label>
+            <a href="#" class="link-muted">Forgot PIN?</a>
+          </div>
 
+          <div class="form-row">
+            <button type="submit" class="btn btn-primary w-full">
+              Sign in
+            </button>
+          </div>
+
+          <p class="auth-footnote" style="text-align:center;">
+            New to PAY54?
+            <a href="signup.html">Create an account</a>
+          </p>
+        </form>
+      </section>
+
+      <!-- RIGHT: BENEFITS -->
+      <aside class="auth-side">
+        <h2>Why people love PAY54</h2>
+        <ul class="auth-benefits">
+          <li>💸 Send & receive money across NG + global corridors</li>
+          <li>💡 Pay bills, airtime, data & utilities in one tap</li>
+          <li>💳 Virtual & linked cards for online payments</li>
+          <li>📈 Investments, savings goals and smart insights</li>
+          <li>🛡 AI Risk Watch keeps your wallet protected</li>
+        </ul>
+      </aside>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="auth-footer">
+      <span>© <span id="authYear"></span> PAY54 Wallet (Mock UI)</span>
+      <div class="auth-footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+      </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="authToast" class="toast toast-info" style="display:none;"></div>
+  </div>
+
+  <script src="src/js/login.js"></script>
 </body>
 </html>

@@ -2,180 +2,160 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PAY54 • Create account</title>
+  <title>Create your PAY54 wallet</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Core styles -->
   <link rel="stylesheet" href="src/css/global.css" />
   <link rel="stylesheet" href="src/css/auth.css" />
 </head>
-<body class="theme-dark">
-  <div class="auth-shell">
-    <!-- HEADER -->
-    <header class="auth-header">
-      <div class="brand-mark">
-        <div class="brand-shield">P54</div>
-        <div class="brand-text-block">
-          <div class="brand-row">
-            <span class="brand-name">PAY54</span>
-            <span class="version-pill">v6.5.2</span>
-          </div>
-          <span class="brand-tagline">Hybrid Money • NG + Global</span>
+<body class="auth-shell">
+
+  <!-- HEADER -->
+  <header class="auth-header">
+    <div class="brand-mark">
+      <div class="brand-shield">P54</div>
+      <div class="brand-text-block">
+        <div>
+          <span class="brand-name">PAY54</span>
+          <span class="version-pill">v6.6</span>
         </div>
+        <span class="brand-tagline">Hybrid Money • NG + Global</span>
       </div>
+    </div>
+    <div class="auth-version">
+      Create wallet • 4-digit PIN • Local session (mock)
+    </div>
+  </header>
 
-      <div class="auth-header-right">
-        <span class="auth-version">Smart Wallet Preview • QA Build</span>
-      </div>
-    </header>
+  <!-- MAIN -->
+  <main class="auth-main">
+    <!-- SIGNUP CARD -->
+    <section class="auth-card">
+      <h1 class="auth-heading">Create your PAY54 wallet</h1>
+      <p class="auth-subheading">
+        Sign up with your email or phone and a secure 4-digit PIN.
+      </p>
 
-    <!-- MAIN -->
-    <main class="auth-main">
-      <!-- LEFT: SIGNUP CARD -->
-      <section class="auth-card">
-        <h1 class="auth-heading">Create your PAY54 wallet</h1>
-        <p class="auth-subheading">
-          Sign up with your email or phone and set a secure 4-digit PIN.
+      <form id="signupForm" class="auth-form" autocomplete="on">
+        <!-- FULL NAME -->
+        <div class="form-row">
+          <label for="signupName">Full name</label>
+          <input
+            id="signupName"
+            type="text"
+            placeholder="e.g. Demi Olawoye"
+            required
+          />
+        </div>
+
+        <!-- EMAIL OR PHONE -->
+        <div class="form-row">
+          <label for="signupIdentifier">Email or phone</label>
+          <input
+            id="signupIdentifier"
+            type="text"
+            autocomplete="username"
+            placeholder="you@pay54.app or +2348012345678"
+            required
+          />
+        </div>
+
+        <!-- COUNTRY -->
+        <div class="form-row">
+          <label for="signupCountry">Country</label>
+          <select id="signupCountry" required>
+            <option value="NG">🇳🇬 Nigeria (NGN)</option>
+            <option value="GH">🇬🇭 Ghana (GHS)</option>
+            <option value="KE">🇰🇪 Kenya (KES)</option>
+            <option value="ZA">🇿🇦 South Africa (ZAR)</option>
+          </select>
+        </div>
+
+        <!-- PIN -->
+        <div class="form-row pin-row">
+          <label for="signupPin">Wallet PIN (4 digits)</label>
+          <input
+            id="signupPin"
+            type="password"
+            inputmode="numeric"
+            maxlength="4"
+            autocomplete="new-password"
+            placeholder="Choose PIN"
+            required
+          />
+          <button
+            type="button"
+            class="pin-toggle"
+            data-target="signupPin"
+            aria-label="Show or hide PIN"
+          >👁</button>
+        </div>
+
+        <!-- CONFIRM PIN -->
+        <div class="form-row pin-row">
+          <label for="signupPinConfirm">Confirm PIN</label>
+          <input
+            id="signupPinConfirm"
+            type="password"
+            inputmode="numeric"
+            maxlength="4"
+            autocomplete="new-password"
+            placeholder="Repeat PIN"
+            required
+          />
+          <button
+            type="button"
+            class="pin-toggle"
+            data-target="signupPinConfirm"
+            aria-label="Show or hide PIN"
+          >👁</button>
+        </div>
+
+        <!-- TERMS -->
+        <div class="form-row">
+          <label class="checkbox">
+            <input type="checkbox" id="signupTerms" />
+            <span>I agree to PAY54’s Terms & Conditions.</span>
+          </label>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="form-row" style="margin-top:1rem;">
+          <button type="submit" class="btn-primary" style="width:100%;">
+            Create PAY54 account
+          </button>
+        </div>
+
+        <p class="auth-footnote">
+          Already have a wallet?
+          <a href="index.html">Sign in instead</a>.
         </p>
+      </form>
+    </section>
 
-        <form id="signupForm" class="auth-form" novalidate>
-          <!-- Full name -->
-          <div class="form-row">
-            <label for="signupName">Full name</label>
-            <input
-              id="signupName"
-              name="fullName"
-              type="text"
-              autocomplete="name"
-              placeholder="e.g. Demi Olawoye"
-              required
-            />
-          </div>
+    <!-- SIDE PANEL -->
+    <aside class="auth-side">
+      <h2>What you get with PAY54</h2>
+      <ul class="auth-benefits">
+        <li>✅ Mock wallet balance to test UX flows.</li>
+        <li>✅ Local-only data using your browser storage.</li>
+        <li>✅ Clean separation between login, signup and dashboard.</li>
+        <li>✅ Perfect for investor demos & product walkthroughs.</li>
+      </ul>
+    </aside>
+  </main>
 
-          <!-- Email -->
-          <div class="form-row">
-            <label for="signupEmail">Email (optional but recommended)</label>
-            <input
-              id="signupEmail"
-              name="email"
-              type="email"
-              autocomplete="email"
-              placeholder="you@pay54.app"
-            />
-          </div>
+  <!-- FOOTER -->
+  <footer class="auth-footer">
+    <span>© PAY54 • v6.6 Auth (Mock)</span>
+    <div class="auth-footer-links">
+      <a href="#">Help</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </footer>
 
-          <!-- Phone -->
-          <div class="form-row">
-            <label for="signupPhone">Phone (for NG & P2P)</label>
-            <input
-              id="signupPhone"
-              name="phone"
-              type="tel"
-              autocomplete="tel"
-              placeholder="+2348012345678"
-              required
-            />
-          </div>
-
-          <!-- PIN -->
-          <div class="form-row">
-            <label for="signupPin">Wallet PIN</label>
-            <div class="pin-wrapper">
-              <input
-                id="signupPin"
-                name="pin"
-                type="password"
-                inputmode="numeric"
-                pattern="[0-9]*"
-                maxlength="4"
-                placeholder="4-digit PIN"
-                required
-              />
-              <button
-                type="button"
-                class="pin-toggle"
-                data-target="signupPin"
-                aria-label="Show or hide PIN"
-              >
-                👁
-              </button>
-            </div>
-          </div>
-
-          <!-- Confirm PIN -->
-          <div class="form-row">
-            <label for="signupPinConfirm">Confirm PIN</label>
-            <div class="pin-wrapper">
-              <input
-                id="signupPinConfirm"
-                name="pinConfirm"
-                type="password"
-                inputmode="numeric"
-                pattern="[0-9]*"
-                maxlength="4"
-                placeholder="Repeat 4-digit PIN"
-                required
-              />
-              <button
-                type="button"
-                class="pin-toggle"
-                data-target="signupPinConfirm"
-                aria-label="Show or hide PIN"
-              >
-                👁
-              </button>
-            </div>
-          </div>
-
-          <!-- Terms -->
-          <div class="form-row-inline">
-            <label class="checkbox">
-              <input type="checkbox" id="signupTerms" />
-              <span>I agree to PAY54 terms & privacy.</span>
-            </label>
-          </div>
-
-          <!-- Submit -->
-          <div class="form-row">
-            <button type="submit" class="btn btn-primary btn-full">
-              <span>Create PAY54 account</span>
-            </button>
-          </div>
-
-          <!-- Footnote -->
-          <p class="auth-footnote">
-            Already have a wallet?
-            <a href="index.html">Sign in instead</a>
-          </p>
-        </form>
-      </section>
-
-      <!-- RIGHT: SIDE INFO -->
-      <aside class="auth-side">
-        <h2>What you get with PAY54</h2>
-        <ul class="auth-benefits">
-          <li>💳 One wallet for NGN, cards, and bills</li>
-          <li>💸 Send & receive to PAY54 users via email or phone</li>
-          <li>💡 Pay bills, airtime, data & TV in a few taps</li>
-          <li>📈 Mock portfolio & savings goals for demo</li>
-          <li>🤖 AI checks to reduce risky behaviour (demo)</li>
-        </ul>
-      </aside>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="auth-footer">
-      <span>© PAY54 Smart Wallet Preview</span>
-      <div class="auth-footer-links">
-        <a href="#">Terms</a>
-        <a href="#">Privacy</a>
-        <a href="#">Support</a>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Toast on auth screens -->
-  <div id="authToast" class="toast" style="display:none;"></div>
+  <!-- TOAST -->
+  <div id="authToast"></div>
 
   <!-- JS -->
   <script src="src/js/signup.js"></script>

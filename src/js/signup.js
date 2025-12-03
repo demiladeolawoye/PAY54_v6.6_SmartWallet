@@ -1,89 +1,98 @@
-// PAY54 v6.6 • signup.js
-// Hybrid signup: email OR phone (phone required), 4-digit PIN
+// ===============================
+// PAY54 v6.6 – SIGNUP LOGIC
+// ===============================
 
 (function () {
-  const form = document.getElementById("signupForm");
-  const authToast = document.getElementById("authToast");
+  const STORAGE_USER = "pay54_user";
+  const STORAGE_SESSION = "pay54_session";
 
-  function showAuthToast(type, message) {
-    if (!authToast) return;
-    authToast.textContent = message;
-    authToast.className = `toast toast-${type}`;
-    authToast.style.display = "block";
+  const form = document.getElementById("signupForm");
+  const toast = document.getElementById("authToast");
+
+  function showToast(message) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.style.display = "block";
     setTimeout(() => {
-      authToast.style.display = "none";
-    }, 2800);
+      toast.style.display = "none";
+    }, 2500);
   }
 
   if (!form) return;
 
-  // PIN eye toggles
-  document.querySelectorAll(".pin-toggle").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const targetId = btn.getAttribute("data-target");
-      const input = document.getElementById(targetId);
-      if (!input) return;
-      const type = input.getAttribute("type") === "password" ? "text" : "password";
-      input.setAttribute("type", type);
-    });
-  });
-
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const fullName = document.getElementById("signupName").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const phone = document.getElementById("signupPhone").value.trim();
+    const name = document.getElementById("signupName").value.trim();
+    const id = document.getElementById("signupIdentifier").value.trim();
+    const country = document.getElementById("signupCountry").value;
     const pin = document.getElementById("signupPin").value.trim();
-    const pinConfirm = document.getElementById("signupPinConfirm").value.trim();
-    const termsChecked = document.getElementById("signupTerms").checked;
+    const pinConfirm = document
+      .getElementById("signupPinConfirm")
+      .value.trim();
+    const terms = document.getElementById("signupTerms").checked;
 
-    if (!fullName) {
-      showAuthToast("error", "Please enter your full name.");
+    if (!name || !id || !pin || !pinConfirm) {
+      showToast("Please fill all required fields.");
       return;
     }
 
-    if (!phone) {
-      showAuthToast("error", "Phone is required for PAY54 NG wallet.");
-      return;
-    }
-
-    if (pin.length !== 4 || !/^[0-9]{4}$/.test(pin)) {
-      showAuthToast("error", "PIN must be exactly 4 digits.");
+    if (pin.length !== 4) {
+      showToast("PIN must be exactly 4 digits.");
       return;
     }
 
     if (pin !== pinConfirm) {
-      showAuthToast("error", "PIN and Confirm PIN do not match.");
+      showToast("PIN and Confirm PIN do not match.");
       return;
     }
 
-    if (!termsChecked) {
-      showAuthToast("warning", "You must agree to the terms to create your wallet.");
+    if (!terms) {
+      showToast("You must agree to the Terms to continue.");
       return;
     }
+
+    // Derive currency from country (simple mock)
+    let currency = "NGN";
+    if (country === "GH") currency = "GHS";
+    if (country === "KE") currency = "KES";
+    if (country === "ZA") currency = "ZAR";
 
     const user = {
-      fullName,
-      email: email || null,
-      phone,
+      id,                // email or phone
+      name,
+      country,
+      currency,
       pin,
-      createdAt: new Date().toISOString(),
+      createdAt: Date.now(),
+      kycTier: "Tier 1 (Mock)",
+      balance: 12500,    // starting mock balance
     };
 
-    localStorage.setItem("pay54_user", JSON.stringify(user));
+    localStorage.setItem(STORAGE_USER, JSON.stringify(user));
 
     const session = {
       loggedIn: true,
-      id: email || phone,
-      name: fullName,
-      createdAt: new Date().toISOString(),
+      userId: id,
+      name,
+      createdAt: Date.now(),
     };
-    localStorage.setItem("pay54_session", JSON.stringify(session));
+    localStorage.setItem(STORAGE_SESSION, JSON.stringify(session));
 
-    showAuthToast("success", "Wallet created successfully 🎉 Redirecting...");
+    showToast("Account created! Redirecting to your dashboard…");
     setTimeout(() => {
       window.location.href = "dashboard.html";
     }, 800);
+  });
+
+  // Reuse eye toggle (same pattern as login)
+  const toggles = document.querySelectorAll(".pin-toggle");
+  toggles.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const input = document.getElementById(targetId);
+      if (!input) return;
+      input.type = input.type === "password" ? "text" : "password";
+    });
   });
 })();

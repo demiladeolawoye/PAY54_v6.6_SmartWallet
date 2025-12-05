@@ -1,184 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- PAY54 v6.6 Demo – Safe Browsing Compliance -->
-<meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-<meta name="safe-browsing" content="demo-wallet-ui">
-<meta name="google-safe" content="simulation-app">
-<meta name="application-type" content="financial-demo">
-<meta name="robots" content="noindex, nofollow">
-<meta name="description" content="PAY54 Wallet UI Demo — No real payments, no sensitive data, no financial processing.">
+  <!--
+    PAY54 v6.6 — Smart Wallet Dashboard
+    Demo-only UI. No real money, no real card processing.
+    Safe for browsing. MIT Licensed.
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-    <!--
-PAY54 v6.6 — Demo Wallet Simulation
-This application does NOT collect sensitive data or process real money.
-Safe for browsing. MIT Licensed.
--->
-<meta name="safe-browsing" content="demo-wallet-ui">
-<meta name="google-safe" content="simulation-app">
-<meta name="application-type" content="financial-demo">
-<meta name="robots" content="noindex,nofollow">
+  <!-- Safe Browsing metadata -->
+  <meta name="safe-browsing" content="demo-financial-app" />
+  <meta name="google-safe" content="simulation-demo" />
+  <meta name="application-type" content="wallet-demo" />
+  <meta name="robots" content="noindex,nofollow" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAY54 Dashboard</title>
+  <!-- Google Verification -->
+  <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
 
-<link rel="stylesheet" href="src/css/global.css">
-<link rel="stylesheet" href="src/css/dashboard.css">
+  <title>PAY54 — Smart Wallet Dashboard</title>
 
+  <!-- Core styles -->
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/dashboard.css" />
 </head>
 
-<body>
-<div style="
-  background:#0f172a;
-  color:#fff;
-  padding:10px 15px;
-  font-size:14px;
-  text-align:center;
-  border-bottom:1px solid #334155;
-">
-  🔒 PAY54 DEMO VERSION — This is a wallet UI simulation for testing only. 
-  No real payments or sensitive data are processed.
-</div>
-
-<!-- ========================= -->
-<!-- SESSION GUARD (v6.6) -->
-<!-- ========================= -->
-<script>
-(function(){
-    const session = JSON.parse(localStorage.getItem("pay54_session"));
-    if(!session || !session.loggedIn){
-        window.location.href = "index.html";
-    }
-})();
-</script>
-
-<!-- ========================= -->
-<!-- HEADER -->
-<!-- ========================= -->
-<header class="dash-header">
-    <div class="logo-wrap">
-        <img src="src/assets/pay54-logo.png" class="dash-logo">
-        <h2 class="dash-title">PAY54</h2>
+<body class="dashboard-shell">
+  <!-- TOP NAV -->
+  <header class="dash-header">
+    <div class="dash-header-left">
+      <div class="brand">
+        <img src="assets/logo-pay54-full.png" alt="PAY54" class="brand-logo" />
+        <div class="brand-text">
+          <span class="brand-name">PAY54</span>
+          <span class="brand-tagline">Hybrid Money • NG + Global</span>
+        </div>
+      </div>
     </div>
 
-    <div class="user-menu">
-        <span id="topUserName"></span>
-        <img src="src/assets/avatar.png" class="avatar-icon" id="profileBtn">
+    <div class="dash-header-right">
+      <div class="country-pill">
+        <span id="activeCountry">🇳🇬 NGN</span>
+      </div>
+
+      <button id="themeToggle" class="hdr-btn" type="button">
+        <span>🌓</span><span>Theme</span>
+      </button>
+
+      <div class="user-menu">
+        <button id="userMenuBtn" class="user-chip" type="button">
+          <div class="user-avatar-circle" id="userAvatarCircle">D</div>
+          <span id="userNameChip">Demi</span>
+          <span>▾</span>
+        </button>
+        <div id="userMenuDropdown" class="user-menu-dropdown">
+          <button type="button" class="user-menu-item" id="menuProfile">👤 Profile</button>
+          <button type="button" class="user-menu-item" id="menuSettings">⚙️ Settings</button>
+          <button type="button" class="user-menu-item" id="menuSupport">💬 Support centre</button>
+          <div class="user-menu-divider"></div>
+          <button type="button" class="user-menu-item logout" id="menuLogout">🚪 Logout</button>
+        </div>
+      </div>
     </div>
-</header>
+  </header>
 
-<!-- ========================= -->
-<!-- BALANCE AREA -->
-<!-- ========================= -->
-<section class="balance-section">
-    <p class="balance-label">Wallet Balance</p>
-    <h2 class="balance-amount" id="walletBalance">₦12,500.00</h2>
+  <!-- MAIN GRID -->
+  <main class="dash-main">
+    <section class="dash-left">
 
-    <div class="balance-buttons">
-        <button class="btn-primary" id="addMoneyBtn">Add Money</button>
-        <button class="btn-outline" id="withdrawBtn">Withdraw</button>
+      <!-- WELCOME + QUICK ACTIONS -->
+      <section class="panel panel-welcome">
+        <div>
+          <h1 id="welcomeTitle">Welcome back, Demi 👋</h1>
+          <p class="muted">Here’s what’s happening with your PAY54 wallet today.</p>
+        </div>
+        <div class="quick-actions">
+          <button type="button" class="pill-btn" id="qaAddMoney">➕ Add money</button>
+          <button type="button" class="pill-btn" id="qaSendMoney">💸 Quick send</button>
+          <button type="button" class="pill-btn" id="qaRequestMoney">📥 Request</button>
+        </div>
+      </section>
+
+      <!-- BALANCE -->
+      <section class="panel panel-balance">
+        <div class="balance-main">
+          <div>
+            <p class="label">Total balance (₦)</p>
+            <h2 class="balance-amount" id="walletBalance">₦12,500.00</h2>
+            <p class="wallet-id">
+              Wallet ID: <span id="walletIdText">P54-12847</span>
+            </p>
+            <p class="wallet-meta">
+              Tier: <span class="pill pill-green" id="walletTier">Tier 2 (BVN verified)</span>
+            </p>
+          </div>
+          <div class="balance-side">
+            <button type="button" class="btn-ghost" id="btnRefreshBalance">🔄 Refresh</button>
+            <p class="fx-note">
+              FX toggle at checkout • NGN ⇄ USD ⇄ GBP.
+            </p>
+          </div>
+        </div>
+
+        <div class="banner-row">
+          <div class="banner banner-sec">
+            <span class="banner-icon">🔒</span>
+            <div>
+              <p class="banner-title">Security Envelope</p>
+              <p class="banner-text">
+                Device binding & AI Risk Watch protect every payment.
+              </p>
+            </div>
+          </div>
+          <div class="banner banner-fx">
+            <span class="banner-icon">💹</span>
+            <div>
+              <p class="banner-title">Signals & Yields</p>
+              <p class="banner-text">
+                Mock FX rates & savings yields for demo only.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MONEY MOVES -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Money Moves</h2>
+        </div>
+        <div class="grid-actions">
+          <button type="button" class="action-card" id="mmSend">
+            <span class="action-emoji">💸</span>
+            <span class="action-title">Send Money</span>
+            <span class="action-sub">P54 • Bank • Contact</span>
+          </button>
+          <button type="button" class="action-card" id="mmReceive">
+            <span class="action-emoji">📥</span>
+            <span class="action-title">Receive Money</span>
+            <span class="action-sub">Wallet ID • QR • Link</span>
+          </button>
+          <button type="button" class="action-card" id="mmAddWithdraw">
+            <span class="action-emoji">➕</span>
+            <span class="action-title">Add / Withdraw</span>
+            <span class="action-sub">Bank • Card • Agent</span>
+          </button>
+          <button type="button" class="action-card" id="mmBankTransfer">
+            <span class="action-emoji">🏦</span>
+            <span class="action-title">Bank Transfer</span>
+            <span class="action-sub">NG Banks (NUBAN)</span>
+          </button>
+          <button type="button" class="action-card" id="mmRequest">
+            <span class="action-emoji">📨</span>
+            <span class="action-title">Request Money</span>
+            <span class="action-sub">Send payment request</span>
+          </button>
+          <button type="button" class="action-card" id="mmFX">
+            <span class="action-emoji">💱</span>
+            <span class="action-title">Currency Exchange</span>
+            <span class="action-sub">NGN ⇄ USD ⇄ GBP</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Services</h2>
+        </div>
+        <div class="grid-services">
+          <button type="button" class="service-card" id="svcCrossBorder">
+            <span class="svc-emoji">🌍</span>
+            <span class="svc-title">Cross-Border Remittance</span>
+            <span class="svc-sub">Send FX to UK, US, EU (demo)</span>
+          </button>
+          <button type="button" class="service-card" id="svcSavings">
+            <span class="svc-emoji">💰</span>
+            <span class="svc-title">Savings & Goals</span>
+            <span class="svc-sub">Create pots, track progress</span>
+          </button>
+          <button type="button" class="service-card" id="svcBills">
+            <span class="svc-emoji">💡</span>
+            <span class="svc-title">Pay Bills & Top-Up</span>
+            <span class="svc-sub">Airtime, Data, Power, TV</span>
+          </button>
+          <button type="button" class="service-card" id="svcCards">
+            <span class="svc-emoji">💳</span>
+            <span class="svc-title">Virtual & Linked Cards</span>
+            <span class="svc-sub">Default card, freeze, mock</span>
+          </button>
+          <button type="button" class="service-card" id="svcPayOnline">
+            <span class="svc-emoji">🛒</span>
+            <span class="svc-title">PAY54 Smart Checkout</span>
+            <span class="svc-sub">Demo checkout summary</span>
+          </button>
+          <button type="button" class="service-card" id="svcShop">
+            <span class="svc-emoji">🏬</span>
+            <span class="svc-title">Shop on the Fly</span>
+            <span class="svc-sub">Taxi • Food • Tickets • Shop</span>
+          </button>
+          <button type="button" class="service-card" id="svcInvest">
+            <span class="svc-emoji">📈</span>
+            <span class="svc-title">Investments & Stocks</span>
+            <span class="svc-sub">Mock portfolio, buy/sell</span>
+          </button>
+          <button type="button" class="service-card" id="svcAgent">
+            <span class="svc-emoji">🧍‍♂️</span>
+            <span class="svc-title">Become an Agent</span>
+            <span class="svc-sub">NIN • Business • Selfie</span>
+          </button>
+          <button type="button" class="service-card" id="svcBet">
+            <span class="svc-emoji">🎯</span>
+            <span class="svc-title">Bet Funding</span>
+            <span class="svc-sub">Bet9ja, 1xBet (demo)</span>
+          </button>
+          <button type="button" class="service-card" id="svcAI">
+            <span class="svc-emoji">🤖</span>
+            <span class="svc-title">AI Risk Watch</span>
+            <span class="svc-sub">Flags risky behaviour (mock)</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- RECENT TRANSACTIONS -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Recent Transactions</h2>
+          <button type="button" class="link-btn" id="btnViewAllTx">View all (demo)</button>
+        </div>
+        <div class="tx-list" id="txList">
+          <!-- Filled by dashboard.js -->
+        </div>
+      </section>
+    </section>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="dash-right">
+      <!-- REQUESTS / NOTIFICATIONS -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Requests & Alerts</h2>
+        </div>
+        <div id="requestsList" class="requests-list">
+          <!-- Filled by dashboard.js -->
+          <p class="muted small">No active requests. Create one via “Request Money”.</p>
+        </div>
+      </section>
+
+      <!-- QUICK SHORTCUTS -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Quick Shortcuts</h2>
+        </div>
+        <div class="quick-shortcuts">
+          <button type="button" class="chip" id="qsAirtime">📱 Airtime</button>
+          <button type="button" class="chip" id="qsData">📶 Data</button>
+          <button type="button" class="chip" id="qsFX">💱 FX</button>
+          <button type="button" class="chip" id="qsCardControls">💳 Card controls</button>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <!-- ============= MODALS (STRUCTURE ONLY — LOGIC IN dashboard.js) ============= -->
+
+  <!-- Generic modal overlay -->
+  <div id="modalOverlay" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Modal title</h3>
+        <button type="button" id="modalCloseBtn" class="modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Filled dynamically -->
+      </div>
+      <div class="modal-footer" id="modalFooter">
+        <!-- Filled dynamically -->
+      </div>
     </div>
-</section>
+  </div>
 
-<!-- ========================= -->
-<!-- QUICK SEND (v6.5.2 retained) -->
-<!-- ========================= -->
-<section class="quick-actions">
-    <h3>Quick Send</h3>
-    <div class="quick-grid">
-        <button class="quick-btn" id="quickSend1">₦1,000</button>
-        <button class="quick-btn" id="quickSend2">₦5,000</button>
-        <button class="quick-btn" id="quickSend3">₦10,000</button>
-        <button class="quick-btn" id="quickSend4">Custom</button>
-    </div>
-</section>
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
 
-<!-- ========================= -->
-<!-- MONEY MOVES SECTION -->
-<!-- ========================= -->
-<section class="moves-section">
-    <h3>Money Moves</h3>
-    <div class="moves-grid">
-        <div class="move-card" id="sendMoneyBtn">Send Money</div>
-        <div class="move-card" id="receiveMoneyBtn">Receive Money</div>
-        <div class="move-card" id="addWithdrawBtn">Add/Withdraw</div>
-        <div class="move-card" id="bankTransferBtn">Bank Transfer</div>
-    </div>
-</section>
-
-<!-- ========================= -->
-<!-- SERVICES -->
-<!-- ========================= -->
-<section class="services-section">
-    <h3>Services</h3>
-    <div class="services-grid">
-
-        <div class="service-card" id="crossBorderBtn">Cross-Border</div>
-        <div class="service-card" id="savingsBtn">Savings</div>
-        <div class="service-card" id="payBillsBtn">Pay Bills</div>
-        <div class="service-card" id="virtualCardBtn">Cards</div>
-        <div class="service-card" id="payOnlineBtn">Pay Online</div>
-        <div class="service-card" id="shopFlyBtn">Shop on the Fly</div>
-        <div class="service-card" id="investBtn">Invest</div>
-        <div class="service-card" id="becomeAgentBtn">Become an Agent</div>
-    </div>
-</section>
-
-<!-- ========================= -->
-<!-- RECENT TRANSACTIONS -->
-<!-- ========================= -->
-<section class="recent-section">
-    <h3>Recent Transactions</h3>
-    <ul id="recentList" class="recent-list">
-        <!-- JS will populate -->
-    </ul>
-</section>
-
-<!-- ========================= -->
-<!-- ALL MODALS (PLACEHOLDERS) -->
-<!-- ========================= -->
-
-<div id="modalContainer"></div>
-
-<!-- ========================= -->
-<!-- LOGOUT CONFIRMATION -->
-<!-- ========================= -->
-<div id="logoutModal" class="modal hidden">
-    <div class="modal-box">
-        <h3>Logout</h3>
-        <p>Are you sure you want to log out?</p>
-        <button id="confirmLogout" class="btn-primary">Yes, Logout</button>
-        <button id="cancelLogout" class="btn-outline">Cancel</button>
-    </div>
-</div>
-<script src="src/js/session.js"></script>
-<script src="src/js/dashboard.js"></script> <!-- if you have one -->
-
-<!-- ========================= -->
-<!-- SCRIPTS -->
-<!-- ========================= -->
-
-<script src="src/js/dashboard.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const session = JSON.parse(localStorage.getItem("pay54_session"));
-    if(session?.name){
-        document.getElementById("topUserName").textContent = session.name;
-    }
-
-    document.getElementById("confirmLogout").onclick = () => {
-        localStorage.removeItem("pay54_session");
-        window.location.href = "index.html";
-    };
-
-    document.getElementById("cancelLogout").onclick = () => {
-        document.getElementById("logoutModal").classList.add("hidden");
-    };
-});
-</script>
-
+  <!-- Scripts -->
+  <script src="src/js/session.js"></script>
+  <script src="src/js/dashboard.js"></script>
 </body>
 </html>

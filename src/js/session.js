@@ -24,7 +24,8 @@
   const path = window.location.pathname || "";
   const isDashboard = path.endsWith("dashboard.html");
   const isLogin = path.endsWith("login.html");
-  const isSignup = path.endsWith("signup.html") || path === "/" || path === "";
+  const isSignup = path.endsWith("signup.html");
+
 
   const user = getUser();
   const session = getSession();

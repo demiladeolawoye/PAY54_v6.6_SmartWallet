@@ -1,156 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <p style="color:#94a3b8; font-size:13px; margin-top:-10px;">
-  This is a demo authentication screen. Your details are stored only in your browser (localStorage) and are not transmitted.
-</p>
-  <!-- PAY54 v6.6 Demo – Safe Browsing Compliance -->
-<meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-<meta name="safe-browsing" content="demo-wallet-ui">
-<meta name="google-safe" content="simulation-app">
-<meta name="application-type" content="financial-demo">
-<meta name="robots" content="noindex, nofollow">
-<meta name="description" content="PAY54 Wallet UI Demo — No real payments, no sensitive data, no financial processing.">
+  <!-- PAY54 v6.6 AUTH PAGE -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-  <!--
-    PAY54 v6.6 — Demo Wallet Simulation
-    This app does NOT store real financial data or move real money.
-    Safe for browsing. MIT Licensed.
-  -->
-  <meta name="safe-browsing" content="demo-wallet-ui">
-  <meta name="google-safe" content="simulation-app">
-  <meta name="application-type" content="financial-demo">
+  <!-- Safe Browsing Metadata -->
+  <meta name="safe-browsing" content="demo-financial-app">
+  <meta name="google-safe" content="simulation-demo">
+  <meta name="application-type" content="wallet-demo">
   <meta name="robots" content="noindex,nofollow">
 
-  <meta charset="UTF-8" />
-  <title>Create your PAY54 account</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Verification -->
+  <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
+
+  <title>Create PAY54 Account</title>
 
   <link rel="stylesheet" href="src/css/global.css" />
   <link rel="stylesheet" href="src/css/auth.css" />
 </head>
 
 <body class="auth-shell">
-  <div style="
-  background:#0f172a;
-  color:#fff;
-  padding:10px 15px;
-  font-size:14px;
-  text-align:center;
-  border-bottom:1px solid #334155;
-">
-  🔒 PAY54 DEMO VERSION — This is a wallet UI simulation for testing only. 
-  No real payments or sensitive data are processed.
-</div>
 
-
+  <!-- Header -->
   <header class="auth-header">
-    <!-- USE SAME LOGO PATH AS DASHBOARD -->
-    <img src="assets/logo-pay54-horizontal.png" class="auth-logo" alt="PAY54" />
-    <span></span>
+    <img src="assets/logo-pay54-full.png" alt="PAY54 Logo" class="auth-logo" />
   </header>
 
   <main class="auth-main">
+    <!-- SIGNUP CARD -->
     <div class="auth-card">
       <h1 class="auth-heading">Create your PAY54 account</h1>
-      <p class="auth-subheading">
-        Sign up to send, save, shop & invest globally with your SmartWallet.
-      </p>
+      <p class="auth-subheading">Sign up to send, save, shop & invest globally.</p>
 
-      <form id="signupForm" class="auth-form" autocomplete="off">
+      <form id="signupForm" class="auth-form">
+
         <div class="form-row">
-          <label for="signupName">Full Name</label>
-          <input
-            id="signupName"
-            type="text"
-            required
-            placeholder="Your full name"
-          />
+          <label>Full Name</label>
+          <input type="text" id="fullName" placeholder="Your full name" required />
         </div>
 
         <div class="form-row">
-          <label for="signupId">Email or phone</label>
-          <input
-            id="signupId"
-            type="text"
-            required
-            placeholder="you@email.com or +2348012345678"
-          />
+          <label>Email or phone</label>
+          <input type="text" id="identifier" placeholder="you@pay54.com or +234.." required />
         </div>
 
-        <div class="form-row">
-          <label for="signupPin">Create 4-digit wallet PIN</label>
-          <div class="pin-wrapper">
-            <input
-              id="signupPin"
-              type="password"
-              maxlength="4"
-              inputmode="numeric"
-              pattern="[0-9]*"
-              required
-            />
-            <button
-              type="button"
-              class="pin-eye"
-              data-target="signupPin"
-              aria-label="Show or hide PIN"
-            >👁</button>
-          </div>
+        <div class="form-row pin-wrapper">
+          <label>Create 4-digit PIN</label>
+          <input type="password" id="pin" maxlength="4" required />
+          <span class="pin-eye" data-target="pin">👁</span>
         </div>
 
-        <div class="form-row">
-          <label for="signupPinConfirm">Confirm PIN</label>
-          <div class="pin-wrapper">
-            <input
-              id="signupPinConfirm"
-              type="password"
-              maxlength="4"
-              inputmode="numeric"
-              pattern="[0-9]*"
-              required
-            />
-            <button
-              type="button"
-              class="pin-eye"
-              data-target="signupPinConfirm"
-              aria-label="Show or hide PIN confirmation"
-            >👁</button>
-          </div>
+        <div class="form-row pin-wrapper">
+          <label>Confirm PIN</label>
+          <input type="password" id="pinConfirm" maxlength="4" required />
+          <span class="pin-eye" data-target="pinConfirm">👁</span>
         </div>
 
-        <button type="submit" class="auth-btn">
-          Create PAY54 account
-        </button>
+        <button type="submit" class="auth-btn">Create PAY54 Account</button>
+
+        <p class="auth-footnote">Already on PAY54? <a href="login.html">Login</a></p>
       </form>
-
-      <p class="auth-footnote">
-        Already on PAY54?
-        <a href="login.html">Login</a>
-      </p>
     </div>
-
-    <aside class="auth-side">
-      <h2>Why PAY54?</h2>
-      <ul class="auth-benefits">
-        <li>💸 Instant NGN P2P with @paytags</li>
-        <li>💳 Virtual + linked cards in one wallet</li>
-        <li>🌍 Smart FX rails for global remittance</li>
-        <li>🛡 AI Risk Watch for suspicious activity</li>
-      </ul>
-    </aside>
   </main>
 
-  <footer class="auth-footer">
-    <span class="auth-version">PAY54 v6.6 Demo • MIT Licensed</span>
-    <span class="auth-footer-links">
-      <a href="#">Terms</a>
-      <a href="#">Privacy</a>
-    </span>
-  </footer>
-
-  <!-- JS: eye toggle + signup/login logic -->
   <script src="src/js/pinToggle.js"></script>
-  <script src="src/js/auth.js"></script>
+  <script src="src/js/signup.js"></script>
 </body>
 </html>

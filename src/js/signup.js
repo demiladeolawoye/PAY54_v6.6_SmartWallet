@@ -1,98 +1,70 @@
-// ===============================
-// PAY54 v6.6 – SIGNUP LOGIC
-// ===============================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- PAY54 v6.6 AUTH PAGE -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-(function () {
-  const STORAGE_USER = "pay54_user";
-  const STORAGE_SESSION = "pay54_session";
+  <!-- Safe Browsing Metadata -->
+  <meta name="safe-browsing" content="demo-financial-app">
+  <meta name="google-safe" content="simulation-demo">
+  <meta name="application-type" content="wallet-demo">
+  <meta name="robots" content="noindex,nofollow">
 
-  const form = document.getElementById("signupForm");
-  const toast = document.getElementById("authToast");
+  <!-- Google Verification -->
+  <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
 
-  function showToast(message) {
-    if (!toast) return;
-    toast.textContent = message;
-    toast.style.display = "block";
-    setTimeout(() => {
-      toast.style.display = "none";
-    }, 2500);
-  }
+  <title>Create PAY54 Account</title>
 
-  if (!form) return;
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/auth.css" />
+</head>
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+<body class="auth-shell">
 
-    const name = document.getElementById("signupName").value.trim();
-    const id = document.getElementById("signupIdentifier").value.trim();
-    const country = document.getElementById("signupCountry").value;
-    const pin = document.getElementById("signupPin").value.trim();
-    const pinConfirm = document
-      .getElementById("signupPinConfirm")
-      .value.trim();
-    const terms = document.getElementById("signupTerms").checked;
+  <!-- Header -->
+  <header class="auth-header">
+    <img src="assets/logo-pay54-full.png" alt="PAY54 Logo" class="auth-logo" />
+  </header>
 
-    if (!name || !id || !pin || !pinConfirm) {
-      showToast("Please fill all required fields.");
-      return;
-    }
+  <main class="auth-main">
+    <!-- SIGNUP CARD -->
+    <div class="auth-card">
+      <h1 class="auth-heading">Create your PAY54 account</h1>
+      <p class="auth-subheading">Sign up to send, save, shop & invest globally.</p>
 
-    if (pin.length !== 4) {
-      showToast("PIN must be exactly 4 digits.");
-      return;
-    }
+      <form id="signupForm" class="auth-form">
 
-    if (pin !== pinConfirm) {
-      showToast("PIN and Confirm PIN do not match.");
-      return;
-    }
+        <div class="form-row">
+          <label>Full Name</label>
+          <input type="text" id="fullName" placeholder="Your full name" required />
+        </div>
 
-    if (!terms) {
-      showToast("You must agree to the Terms to continue.");
-      return;
-    }
+        <div class="form-row">
+          <label>Email or phone</label>
+          <input type="text" id="identifier" placeholder="you@pay54.com or +234.." required />
+        </div>
 
-    // Derive currency from country (simple mock)
-    let currency = "NGN";
-    if (country === "GH") currency = "GHS";
-    if (country === "KE") currency = "KES";
-    if (country === "ZA") currency = "ZAR";
+        <div class="form-row pin-wrapper">
+          <label>Create 4-digit PIN</label>
+          <input type="password" id="pin" maxlength="4" required />
+          <span class="pin-eye" data-target="pin">👁</span>
+        </div>
 
-    const user = {
-      id,                // email or phone
-      name,
-      country,
-      currency,
-      pin,
-      createdAt: Date.now(),
-      kycTier: "Tier 1 (Mock)",
-      balance: 12500,    // starting mock balance
-    };
+        <div class="form-row pin-wrapper">
+          <label>Confirm PIN</label>
+          <input type="password" id="pinConfirm" maxlength="4" required />
+          <span class="pin-eye" data-target="pinConfirm">👁</span>
+        </div>
 
-    localStorage.setItem(STORAGE_USER, JSON.stringify(user));
+        <button type="submit" class="auth-btn">Create PAY54 Account</button>
 
-    const session = {
-      loggedIn: true,
-      userId: id,
-      name,
-      createdAt: Date.now(),
-    };
-    localStorage.setItem(STORAGE_SESSION, JSON.stringify(session));
+        <p class="auth-footnote">Already on PAY54? <a href="login.html">Login</a></p>
+      </form>
+    </div>
+  </main>
 
-    showToast("Account created! Redirecting to your dashboard…");
-    setTimeout(() => {
-      window.location.href = "dashboard.html";
-    }, 800);
-  });
-
-  // Reuse eye toggle (same pattern as login)
-  const toggles = document.querySelectorAll(".pin-toggle");
-  toggles.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const targetId = btn.getAttribute("data-target");
-      const input = document.getElementById(targetId);
-      if (!input) return;
-      input.type = input.type === "password" ? "text" : "password";
-    });
-  });
-})();
+  <script src="src/js/pinToggle.js"></script>
+  <script src="src/js/signup.js"></script>
+</body>
+</html>

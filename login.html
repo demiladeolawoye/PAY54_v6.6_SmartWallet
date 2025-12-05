@@ -1,138 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <p style="color:#94a3b8; font-size:13px; margin-top:-10px;">
-  This is a demo authentication screen. Your details are stored only in your browser (localStorage) and are not transmitted.
-</p>
-  <!-- PAY54 v6.6 Demo – Safe Browsing Compliance -->
-<meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-<meta name="safe-browsing" content="demo-wallet-ui">
-<meta name="google-safe" content="simulation-app">
-<meta name="application-type" content="financial-demo">
-<meta name="robots" content="noindex, nofollow">
-<meta name="description" content="PAY54 Wallet UI Demo — No real payments, no sensitive data, no financial processing.">
+  <!-- PAY54 v6.6 LOGIN PAGE -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-  <!--
-    PAY54 v6.6 — Demo Wallet Simulation
-    No real banking, no real money movement.
-  -->
-  <meta name="safe-browsing" content="demo-wallet-ui">
-  <meta name="google-safe" content="simulation-app">
-  <meta name="application-type" content="financial-demo">
+  <!-- Safe Browsing Metadata -->
+  <meta name="safe-browsing" content="demo-financial-app">
+  <meta name="google-safe" content="simulation-demo">
+  <meta name="application-type" content="wallet-demo">
   <meta name="robots" content="noindex,nofollow">
 
-  <meta charset="UTF-8">
-  <title>PAY54 — Sign in</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Verification -->
+  <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
 
-  <link rel="stylesheet" href="src/css/global.css">
-  <link rel="stylesheet" href="src/css/auth.css">
+  <title>PAY54 — Sign in</title>
+
+  <link rel="stylesheet" href="src/css/global.css" />
+  <link rel="stylesheet" href="src/css/auth.css" />
 </head>
 
 <body class="auth-shell">
-  <div style="
-  background:#0f172a;
-  color:#fff;
-  padding:10px 15px;
-  font-size:14px;
-  text-align:center;
-  border-bottom:1px solid #334155;
-">
-  🔒 PAY54 DEMO VERSION — This is a wallet UI simulation for testing only. 
-  No real payments or sensitive data are processed.
-</div>
 
   <header class="auth-header">
-    <!-- SAME HORIZONTAL LOGO STYLE AS DASHBOARD -->
-    <img src="assets/logo-pay54-horizontal.png" class="auth-logo" alt="PAY54">
-    <span></span>
+    <img src="assets/logo-pay54-full.png" class="auth-logo" />
   </header>
 
   <main class="auth-main">
-
     <div class="auth-card">
-      <h1 class="auth-heading">Welcome back 👋</h1>
-      <p class="auth-subheading">
-        Sign in to your PAY54 SmartWallet to send, save, pay bills & shop on the fly.
-      </p>
+      <h1 class="auth-heading">Sign in to PAY54</h1>
 
-      <form id="loginForm" class="auth-form" autocomplete="off">
-        <div class="form-row">
-          <label for="loginId">Email or phone</label>
-          <input
-            id="loginId"
-            type="text"
-            required
-            placeholder="you@email.com or +2348012345678"
-          />
-        </div>
+      <form id="loginForm" class="auth-form">
 
         <div class="form-row">
-          <label for="loginPin">4-digit wallet PIN</label>
-          <div class="pin-wrapper">
-            <input
-              id="loginPin"
-              type="password"
-              maxlength="4"
-              inputmode="numeric"
-              pattern="[0-9]*"
-              required
-            />
-            <button
-              type="button"
-              class="pin-eye"
-              data-target="loginPin"
-              aria-label="Show or hide PIN"
-            >👁</button>
-          </div>
+          <label>Email or phone</label>
+          <input type="text" id="loginIdentifier" placeholder="you@domain.com or +234" required />
         </div>
 
-        <div class="form-row-inline">
-          <label class="checkbox">
-            <input type="checkbox" id="rememberMe">
-            <span>Remember this device</span>
-          </label>
-
-          <button
-            type="button"
-            id="forgotPinBtn"
-            class="link-button"
-          >
-            Forgot PIN?
-          </button>
+        <div class="form-row pin-wrapper">
+          <label>Wallet PIN</label>
+          <input type="password" id="loginPin" maxlength="4" required />
+          <span class="pin-eye" data-target="loginPin">👁</span>
         </div>
 
-        <button type="submit" class="auth-btn">
-          Sign in to PAY54
-        </button>
+        <button type="submit" class="auth-btn">Sign in to PAY54</button>
+
+        <p class="auth-footnote">
+          Forgot PIN? <a href="verify.html">Recover PIN</a>
+        </p>
       </form>
-
-      <p class="auth-footnote">
-        New to PAY54?
-        <a href="signup.html">Create an account</a>
-      </p>
     </div>
-
-    <aside class="auth-side">
-      <h2>Smart, safe everyday payments</h2>
-      <ul class="auth-benefits">
-        <li>📲 One app for P2P, cards & bills</li>
-        <li>🌍 NGN + FX ready wallet rails</li>
-        <li>🕵️‍♂️ Device + PIN based security</li>
-      </ul>
-    </aside>
   </main>
 
-  <footer class="auth-footer">
-    <span class="auth-version">PAY54 v6.6 Demo • MIT Licensed</span>
-    <span class="auth-footer-links">
-      <a href="#">Terms</a>
-      <a href="#">Privacy</a>
-    </span>
-  </footer>
-
   <script src="src/js/pinToggle.js"></script>
-  <script src="src/js/auth.js"></script>
+  <script src="src/js/login.js"></script>
 </body>
 </html>

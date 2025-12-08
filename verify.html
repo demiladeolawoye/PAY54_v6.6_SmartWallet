@@ -1,73 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head
-    <!-- PAY54 v6.6 Demo – Safe Browsing Compliance -->
-<meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-<meta name="safe-browsing" content="demo-wallet-ui">
-<meta name="google-safe" content="simulation-app">
-<meta name="application-type" content="financial-demo">
-<meta name="robots" content="noindex, nofollow">
-<meta name="description" content="PAY54 Wallet UI Demo — No real payments, no sensitive data, no financial processing.">
-
-    <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-    <!--
-PAY54 v6.6 — Demo Wallet Simulation
-This application does NOT collect sensitive data or process real money.
-Safe for browsing. MIT Licensed.
--->
-<meta name="safe-browsing" content="demo-wallet-ui">
-<meta name="google-safe" content="simulation-app">
-<meta name="application-type" content="financial-demo">
-<meta name="robots" content="noindex,nofollow">
-
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Verify Your PAY54 Account</title>
-<link rel="stylesheet" href="src/css/auth.css">
+<head>
+  <meta charset="UTF-8" />
+  <title>PAY54 – Verify & Reset PIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Verify your one-time code and set a new PAY54 wallet PIN."
+  />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <script src="js/session.js" defer></script>
+  <script src="js/auth.js" defer></script>
 </head>
+<body>
+  <div class="page-shell auth-shell">
+    <div class="card">
+      <div class="card-header">
+        <div class="brand-logo">
+          <img src="assets/pay54-logo.svg" alt="PAY54 logo" />
+          <span class="brand-name">PAY54</span>
+        </div>
+        <span class="chip">Secure reset</span>
+      </div>
 
-<body class="auth-body">
-    <div style="
-  background:#0f172a;
-  color:#fff;
-  padding:10px 15px;
-  font-size:14px;
-  text-align:center;
-  border-bottom:1px solid #334155;
-">
-  🔒 PAY54 DEMO VERSION — This is a wallet UI simulation for testing only. 
-  No real payments or sensitive data are processed.
-</div>
-
-
-<div class="auth-container">
-    <h2>Verify your account</h2>
-    <p>Enter the 6-digit code sent to your email/phone.</p>
-
-    <form id="verifyForm" class="auth-form">
-        <div class="form-row">
-            <label>Verification Code</label>
-            <input id="otpInput" type="number" maxlength="6" placeholder="123456" required>
+      <div class="card-body">
+        <div class="stepper">
+          <div class="step completed">
+            <div class="step-indicator">1</div>
+            <div class="step-label">Identify</div>
+          </div>
+          <div class="step active">
+            <div class="step-indicator">2</div>
+            <div class="step-label">Verify</div>
+          </div>
+          <div class="step">
+            <div class="step-indicator">3</div>
+            <div class="step-label">Reset PIN</div>
+          </div>
         </div>
 
-        <button class="auth-btn">Verify</button>
-    </form>
-</div>
+        <h1 class="card-title">Check your messages</h1>
+        <p class="card-subtitle" id="verifySubtitle">
+          We’ve sent a 6-digit code to your registered email / phone.
+        </p>
 
-<script>
-document.getElementById("verifyForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+        <form id="verifyForm" style="margin-top: 1rem;">
+          <div class="input-group">
+            <label class="input-label" for="verify-code">
+              6-digit code
+            </label>
+            <div class="input-wrapper">
+              <input
+                id="verify-code"
+                class="input-field"
+                type="text"
+                inputmode="numeric"
+                maxlength="6"
+                placeholder="Enter your code"
+                required
+              />
+            </div>
+          </div>
 
-    const userOTP = document.getElementById("otpInput").value.trim();
-    const realOTP = localStorage.getItem("pay54_otp");
+          <div id="verifyError" class="text-error" style="display:none;"></div>
+          <div id="verifyInfo" class="text-success" style="display:none;"></div>
 
-    if (userOTP === realOTP) {
-        window.location.href = "dashboard.html";
-    } else {
-        alert("Incorrect OTP. Try again.");
-    }
-});
-</script>
+          <div class="input-group" style="margin-top: 1rem;">
+            <label class="input-label" for="new-pin">
+              New wallet PIN
+              <span class="helper">4–6 digits</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                id="new-pin"
+                class="input-field pin-input"
+                type="password"
+                inputmode="numeric"
+                maxlength="6"
+                placeholder="Choose a new PIN"
+                required
+              />
+              <button
+                type="button"
+                class="toggle-pin"
+                aria-label="Toggle PIN visibility"
+              >
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M2.5 12C3.5 9 6.5 5 12 5s8.5 4 9.5 7c-1 3-4 7-9.5 7S3.5 15 2.5 12Z"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
 
+          <div class="input-group">
+            <label class="input-label" for="confirm-pin">
+              Confirm new PIN
+            </label>
+            <div class="input-wrapper">
+              <input
+                id="confirm-pin"
+                class="input-field pin-input"
+                type="password"
+                inputmode="numeric"
+                maxlength="6"
+                placeholder="Re-enter PIN"
+                required
+              />
+              <button
+                type="button"
+                class="toggle-pin"
+                aria-label="Toggle PIN visibility"
+              >
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M2.5 12C3.5 9 6.5 5 12 5s8.5 4 9.5 7c-1 3-4 7-9.5 7S3.5 15 2.5 12Z"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn" style="margin-top: 0.5rem;">
+            Save new PIN &amp; sign in
+          </button>
+
+          <div class="auth-footnote">
+            Didn’t receive a code?
+            <a href="recover.html">Try again</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

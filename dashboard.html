@@ -1,202 +1,144 @@
+<!-- dashboard.html – PAY54 v6.6 Option A Layout (Skeleton) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PAY54 – Wallet dashboard</title>
+  <title>PAY54 • Smart Wallet Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="PAY54 wallet dashboard – send, receive, FX, shop on the fly, invest, pay bills and manage your money."
-  />
-  <link rel="stylesheet" href="css/global.css" />
-  <link rel="stylesheet" href="css/dashboard.css" />
-  <script src="js/session.js" defer></script>
-  <script src="js/dashboard.js" defer></script>
+  <link rel="stylesheet" href="assets/css/dashboard.css" />
 </head>
-<body class="dashboard-shell">
-  <header class="dashboard-header">
-    <div class="brand-logo">
-      <img src="assets/pay54-logo.svg" alt="PAY54 logo" />
-      <span class="brand-name">PAY54</span>
+<body class="dash-body">
+  <div class="dash-shell">
+    <!-- Top bar -->
+    <header class="dash-topbar">
+      <div class="dash-left">
+        <img src="assets/img/pay54-logo.svg" alt="PAY54" class="dash-logo" />
+        <div class="dash-brand-block">
+          <span class="dash-brand">PAY54</span>
+          <span class="dash-sub">Hybrid smart wallet</span>
+        </div>
+      </div>
+      <div class="dash-right">
+        <button class="chip ghost">NGN</button>
+        <button class="chip ghost">GBP</button>
+        <div class="profile-pill">
+          <div class="avatar">P</div>
+          <span class="profile-name">Prem Wallet</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content: Option A two-column -->
+    <main class="dash-main">
+      <!-- LEFT COLUMN: Actions & services -->
+      <section class="col-left">
+        <div class="card balance-card">
+          <span class="label">Total Balance</span>
+          <div class="balance-row">
+            <h1 class="balance-amount">₦ 540,000.00</h1>
+            <span class="badge success">+ ₦28,400 today</span>
+          </div>
+          <p class="balance-sub">Multi-wallet • NGN • GBP • USD</p>
+          <div class="quick-actions">
+            <button class="btn-soft" data-action="add-money">Add money</button>
+            <button class="btn-soft" data-action="cash-out">Cash out</button>
+          </div>
+        </div>
+
+        <div class="card actions-card">
+          <h2 class="card-title">Money moves</h2>
+          <div class="grid-actions">
+            <button class="action-tile" data-modal="sendMoney">
+              <span>Send</span>
+              <small>Wallet • Bank • Mobile money</small>
+            </button>
+            <button class="action-tile" data-modal="requestMoney">
+              <span>Request</span>
+              <small>Friends • Family • Groups</small>
+            </button>
+            <button class="action-tile" data-modal="fxSwap">
+              <span>FX Swap</span>
+              <small>NGN ⇄ GBP ⇄ USD</small>
+            </button>
+            <button class="action-tile" data-modal="virtualCard">
+              <span>Virtual card</span>
+              <small>Online payments • Subscriptions</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="card services-card">
+          <h2 class="card-title">Quick services</h2>
+          <div class="chip-row">
+            <button class="chip" data-modal="billsPower">Power</button>
+            <button class="chip" data-modal="billsData">Data</button>
+            <button class="chip" data-modal="billsTV">TV</button>
+            <button class="chip" data-modal="billsBet">Bet funding</button>
+            <button class="chip" data-modal="billsEducation">School fees</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: Activity & shortcuts -->
+      <section class="col-right">
+        <div class="card recent-card">
+          <div class="card-header-row">
+            <h2 class="card-title">Recent activity</h2>
+            <button class="link-small">View all</button>
+          </div>
+          <ul class="txn-list">
+            <li class="txn-row">
+              <div>
+                <span class="txn-title">Transfer to Cray Valley FC</span>
+                <small class="txn-meta">Today • NGN Wallet</small>
+              </div>
+              <div class="txn-amount debit">- ₦15,000</div>
+            </li>
+            <li class="txn-row">
+              <div>
+                <span class="txn-title">FX Swap: NGN → GBP</span>
+                <small class="txn-meta">Yesterday • FX Wallet</small>
+              </div>
+              <div class="txn-amount debit">- ₦120,000</div>
+            </li>
+            <li class="txn-row">
+              <div>
+                <span class="txn-title">Top up from linked card</span>
+                <small class="txn-meta">3 days ago • Visa • 1234</small>
+              </div>
+              <div class="txn-amount credit">+ ₦300,000</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card shortcuts-card">
+          <h2 class="card-title">Shortcuts</h2>
+          <div class="chip-column">
+            <button class="chip full" data-modal="agentMode">Become an Agent</button>
+            <button class="chip full" data-modal="shopOnTheFly">Shop on the Fly</button>
+            <button class="chip full" data-modal="investStocks">Invest & Stocks</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal container (generic) -->
+  <div id="pay54ModalLayer" class="modal-layer hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">PAY54 Action</h3>
+        <button class="modal-close" data-close>&times;</button>
+      </div>
+      <div id="modalBody" class="modal-body">
+        <p>Coming soon: full flow wiring for this feature.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-soft" data-close>Close</button>
+      </div>
     </div>
+  </div>
 
-    <div class="dashboard-header-right">
-      <div class="user-avatar" id="userAvatar">P54</div>
-      <button id="logoutBtn" class="logout-btn">Logout</button>
-    </div>
-  </header>
-
-  <main class="dashboard-main">
-    <section class="dashboard-header-left">
-      <div class="user-greeting" id="userGreeting">Good afternoon, PAY54 user</div>
-
-      <div class="balance-card">
-        <div>
-          <div class="balance-label">Available balance</div>
-          <div class="balance-amount" id="balanceAmount">£0.00</div>
-          <div class="balance-meta">Multi-currency wallet • Live FX rails</div>
-        </div>
-        <div class="balance-actions">
-          <button class="btn btn-secondary" data-action="add-money">
-            Add / Withdraw
-          </button>
-          <button class="btn" data-action="send-money">
-            Send money
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- MAIN FEATURES GRID -->
-    <section class="section" style="margin-top: 1.4rem;">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Wallet actions</h2>
-          <p class="section-subtitle">
-            Everyday payments and cross-border money movement.
-          </p>
-        </div>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-card" data-action="send-money">
-          <div class="feature-icon">⇄</div>
-          <div class="feature-title">Send</div>
-          <div class="feature-subtitle">
-            To PAY54, bank, or mobile money.
-          </div>
-        </div>
-
-        <div class="feature-card" data-action="receive-money">
-          <div class="feature-icon">⬤</div>
-          <div class="feature-title">Receive</div>
-          <div class="feature-subtitle">
-            Get paid via link, QR, or bank.
-          </div>
-        </div>
-
-        <div class="feature-card" data-action="add-money">
-          <div class="feature-icon">＋</div>
-          <div class="feature-title">Add money</div>
-          <div class="feature-subtitle">
-            Cards, bank transfer, mobile money.
-          </div>
-        </div>
-
-        <div class="feature-card" data-action="fx">
-          <div class="feature-icon">₦/£</div>
-          <div class="feature-title">FX &amp; Cross-border</div>
-          <div class="feature-subtitle">
-            Swap currencies &amp; send abroad.
-          </div>
-        </div>
-
-        <div class="feature-card" data-action="shop-on-the-fly">
-          <div class="feature-icon">🛒</div>
-          <div class="feature-title">Shop on the fly</div>
-          <div class="feature-subtitle">
-            Pay online instantly with wallet.
-          </div>
-        </div>
-
-        <div class="feature-card" data-action="bills-airtime">
-          <div class="feature-icon">📶</div>
-          <div class="feature-title">Bills &amp; Airtime</div>
-          <div class="feature-subtitle">
-            Top up data, power &amp; TV in seconds.
-          </div>
-        </div>
-
-        <div class="feature-card" data-action="invest-stocks">
-          <div class="feature-icon">📈</div>
-          <div class="feature-title">Invest &amp; stocks</div>
-          <div class="feature-subtitle">
-            Micro-investments from your wallet.
-          </div>
-        </div>
-
-        <div class="feature-card" data-action="virtual-cards">
-          <div class="feature-icon">💳</div>
-          <div class="feature-title">Virtual &amp; linked cards</div>
-          <div class="feature-subtitle">
-            Create cards, link bank / mobile money.
-          </div>
-        </div>
-
-        <div class="feature-card" data-action="savings">
-          <div class="feature-icon">💰</div>
-          <div class="feature-title">Savings &amp; goals</div>
-          <div class="feature-subtitle">
-            Lock pots, targets &amp; auto-save.
-          </div>
-        </div>
-
-        <div class="feature-card" data-action="agent-network">
-          <div class="feature-icon">🤝</div>
-          <div class="feature-title">Become an agent</div>
-          <div class="feature-subtitle">
-            Earn by onboarding users &amp; merchants.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUICK SERVICES -->
-    <section class="section">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Quick services</h2>
-          <p class="section-subtitle">
-            Your most used actions, one tap away.
-          </p>
-        </div>
-      </div>
-      <div class="quick-services" id="quickServices">
-        <button class="quick-chip" data-action="buy-airtime">Buy airtime</button>
-        <button class="quick-chip" data-action="buy-data">Buy data</button>
-        <button class="quick-chip" data-action="pay-electricity">Pay electricity</button>
-        <button class="quick-chip" data-action="pay-tv">Pay TV subscription</button>
-        <button class="quick-chip" data-action="betting-wallet">Fund betting wallet</button>
-        <button class="quick-chip" data-action="transport-topup">Top up transport</button>
-      </div>
-    </section>
-
-    <!-- RECENT TRANSACTIONS (MOCK) -->
-    <section class="section">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Recent activity</h2>
-          <p class="section-subtitle">
-            Live feed of your latest PAY54 moves.
-          </p>
-        </div>
-        <a href="#" id="viewAllActivity">View all</a>
-      </div>
-
-      <div class="tx-list" id="txList">
-        <div class="tx-row">
-          <div class="tx-left">
-            <span class="tx-title">Sent to Ebbsfleet FC U13 fees</span>
-            <span class="tx-meta">Today • Wallet → Bank transfer</span>
-          </div>
-          <span class="tx-amount-negative">-£75.00</span>
-        </div>
-        <div class="tx-row">
-          <div class="tx-left">
-            <span class="tx-title">FX swap ₦ → £</span>
-            <span class="tx-meta">Yesterday • FX rails</span>
-          </div>
-          <span class="tx-amount-positive">+£220.00</span>
-        </div>
-        <div class="tx-row">
-          <div class="tx-left">
-            <span class="tx-title">Netflix UK subscription</span>
-            <span class="tx-meta">2 days ago • Virtual card</span>
-          </div>
-          <span class="tx-amount-negative">-£15.99</span>
-        </div>
-      </div>
-    </section>
-  </main>
+  <script src="assets/js/dashboard.js"></script>
 </body>
 </html>

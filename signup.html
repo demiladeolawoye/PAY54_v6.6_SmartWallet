@@ -1,70 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- PAY54 v6.6 AUTH PAGE -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Safe Browsing Metadata -->
-  <meta name="safe-browsing" content="demo-financial-app">
-  <meta name="google-safe" content="simulation-demo">
-  <meta name="application-type" content="wallet-demo">
-  <meta name="robots" content="noindex,nofollow">
-
-  <!-- Google Verification -->
-  <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-
-  <title>Create PAY54 Account</title>
-
-  <link rel="stylesheet" href="src/css/global.css" />
-  <link rel="stylesheet" href="src/css/auth.css" />
+  <title>PAY54 – Create wallet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Create your PAY54 hybrid wallet – send, receive, pay bills, FX and shop on the fly."
+  />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <script src="js/session.js" defer></script>
+  <script src="js/auth.js" defer></script>
 </head>
-
-<body class="auth-shell">
-
-  <!-- Header -->
-  <header class="auth-header">
-    <img src="assets/logo-pay54-full.png" alt="PAY54 Logo" class="auth-logo" />
-  </header>
-
-  <main class="auth-main">
-    <!-- SIGNUP CARD -->
-    <div class="auth-card">
-      <h1 class="auth-heading">Create your PAY54 account</h1>
-      <p class="auth-subheading">Sign up to send, save, shop & invest globally.</p>
-
-      <form id="signupForm" class="auth-form">
-
-        <div class="form-row">
-          <label>Full Name</label>
-          <input type="text" id="fullName" placeholder="Your full name" required />
+<body>
+  <div class="page-shell auth-shell">
+    <div class="card">
+      <div class="card-header">
+        <div class="brand-logo">
+          <img src="assets/pay54-logo.svg" alt="PAY54 logo" />
+          <span class="brand-name">PAY54</span>
         </div>
+        <span class="chip">Create wallet</span>
+      </div>
 
-        <div class="form-row">
-          <label>Email or phone</label>
-          <input type="text" id="identifier" placeholder="you@pay54.com or +234.." required />
-        </div>
+      <div class="card-body">
+        <h1 class="card-title">Open your PAY54 wallet</h1>
+        <p class="card-subtitle">
+          One wallet for airtime, FX, bills, shop on the fly &amp; global payments.
+        </p>
 
-        <div class="form-row pin-wrapper">
-          <label>Create 4-digit PIN</label>
-          <input type="password" id="pin" maxlength="4" required />
-          <span class="pin-eye" data-target="pin">👁</span>
-        </div>
+        <form id="signupForm" style="margin-top: 1rem;">
+          <div class="input-group">
+            <label class="input-label" for="signup-name">Full name</label>
+            <div class="input-wrapper">
+              <input
+                id="signup-name"
+                class="input-field"
+                type="text"
+                autocomplete="name"
+                placeholder="Demi Olawoye"
+                required
+              />
+            </div>
+          </div>
 
-        <div class="form-row pin-wrapper">
-          <label>Confirm PIN</label>
-          <input type="password" id="pinConfirm" maxlength="4" required />
-          <span class="pin-eye" data-target="pinConfirm">👁</span>
-        </div>
+          <div class="input-group">
+            <label class="input-label" for="signup-email">
+              Email address
+            </label>
+            <div class="input-wrapper">
+              <input
+                id="signup-email"
+                class="input-field"
+                type="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+          </div>
 
-        <button type="submit" class="auth-btn">Create PAY54 Account</button>
+          <div class="input-group">
+            <label class="input-label" for="signup-phone">
+              Mobile number
+              <span class="helper">For OTP &amp; alerts</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                id="signup-phone"
+                class="input-field"
+                type="tel"
+                inputmode="tel"
+                placeholder="+44 7xxx xxx xxx"
+                required
+              />
+            </div>
+          </div>
 
-        <p class="auth-footnote">Already on PAY54? <a href="login.html">Login</a></p>
-      </form>
+          <div class="input-group">
+            <label class="input-label" for="signup-pin">
+              Create wallet PIN
+              <span class="helper">4–6 digits</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                id="signup-pin"
+                class="input-field pin-input"
+                type="password"
+                inputmode="numeric"
+                maxlength="6"
+                placeholder="Choose a secure PIN"
+                required
+              />
+              <button
+                type="button"
+                class="toggle-pin"
+                aria-label="Toggle PIN visibility"
+              >
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M2.5 12C3.5 9 6.5 5 12 5s8.5 4 9.5 7c-1 3-4 7-9.5 7S3.5 15 2.5 12Z"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div id="signupError" class="text-error" style="display:none;"></div>
+
+          <button type="submit" class="btn" style="margin-top: 0.75rem;">
+            Create wallet
+          </button>
+
+          <div class="auth-footnote">
+            Already have a PAY54 wallet?
+            <a href="login.html">Sign in instead</a>
+          </div>
+        </form>
+      </div>
     </div>
-  </main>
-
-  <script src="src/js/pinToggle.js"></script>
-  <script src="src/js/signup.js"></script>
+  </div>
 </body>
 </html>

@@ -1,290 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--
-    PAY54 v6.6 — Smart Wallet Dashboard
-    Demo-only UI. No real money, no real card processing.
-    Safe for browsing. MIT Licensed.
-  -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Safe Browsing metadata -->
-  <meta name="safe-browsing" content="demo-financial-app" />
-  <meta name="google-safe" content="simulation-demo" />
-  <meta name="application-type" content="wallet-demo" />
-  <meta name="robots" content="noindex,nofollow" />
-
-  <!-- Google Verification -->
-  <meta name="google-site-verification" content="WwBFwlXwiHoiWkOd_PV3F0V2S32NCbf3vBuq9SOzM9A" />
-
-  <title>PAY54 — Smart Wallet Dashboard</title>
-
-  <!-- Core styles -->
-  <link rel="stylesheet" href="src/css/global.css" />
-  <link rel="stylesheet" href="src/css/dashboard.css" />
+  <title>PAY54 – Wallet dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="PAY54 wallet dashboard – send, receive, FX, shop on the fly, invest, pay bills and manage your money."
+  />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <script src="js/session.js" defer></script>
+  <script src="js/dashboard.js" defer></script>
 </head>
-
 <body class="dashboard-shell">
-  <!-- TOP NAV -->
-  <header class="dash-header">
-    <div class="dash-header-left">
-      <div class="brand">
-        <img src="assets/logo-pay54-full.png" alt="PAY54" class="brand-logo" />
-        <div class="brand-text">
-          <span class="brand-name">PAY54</span>
-          <span class="brand-tagline">Hybrid Money • NG + Global</span>
-        </div>
-      </div>
+  <header class="dashboard-header">
+    <div class="brand-logo">
+      <img src="assets/pay54-logo.svg" alt="PAY54 logo" />
+      <span class="brand-name">PAY54</span>
     </div>
 
-    <div class="dash-header-right">
-      <div class="country-pill">
-        <span id="activeCountry">🇳🇬 NGN</span>
-      </div>
-
-      <button id="themeToggle" class="hdr-btn" type="button">
-        <span>🌓</span><span>Theme</span>
-      </button>
-
-      <div class="user-menu">
-        <button id="userMenuBtn" class="user-chip" type="button">
-          <div class="user-avatar-circle" id="userAvatarCircle">D</div>
-          <span id="userNameChip">Demi</span>
-          <span>▾</span>
-        </button>
-        <div id="userMenuDropdown" class="user-menu-dropdown">
-          <button type="button" class="user-menu-item" id="menuProfile">👤 Profile</button>
-          <button type="button" class="user-menu-item" id="menuSettings">⚙️ Settings</button>
-          <button type="button" class="user-menu-item" id="menuSupport">💬 Support centre</button>
-          <div class="user-menu-divider"></div>
-          <button type="button" class="user-menu-item logout" id="menuLogout">🚪 Logout</button>
-        </div>
-      </div>
+    <div class="dashboard-header-right">
+      <div class="user-avatar" id="userAvatar">P54</div>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
     </div>
   </header>
 
-  <!-- MAIN GRID -->
-  <main class="dash-main">
-    <section class="dash-left">
+  <main class="dashboard-main">
+    <section class="dashboard-header-left">
+      <div class="user-greeting" id="userGreeting">Good afternoon, PAY54 user</div>
 
-      <!-- WELCOME + QUICK ACTIONS -->
-      <section class="panel panel-welcome">
+      <div class="balance-card">
         <div>
-          <h1 id="welcomeTitle">Welcome back, Demi 👋</h1>
-          <p class="muted">Here’s what’s happening with your PAY54 wallet today.</p>
+          <div class="balance-label">Available balance</div>
+          <div class="balance-amount" id="balanceAmount">£0.00</div>
+          <div class="balance-meta">Multi-currency wallet • Live FX rails</div>
         </div>
-        <div class="quick-actions">
-          <button type="button" class="pill-btn" id="qaAddMoney">➕ Add money</button>
-          <button type="button" class="pill-btn" id="qaSendMoney">💸 Quick send</button>
-          <button type="button" class="pill-btn" id="qaRequestMoney">📥 Request</button>
-        </div>
-      </section>
-
-      <!-- BALANCE -->
-      <section class="panel panel-balance">
-        <div class="balance-main">
-          <div>
-            <p class="label">Total balance (₦)</p>
-            <h2 class="balance-amount" id="walletBalance">₦12,500.00</h2>
-            <p class="wallet-id">
-              Wallet ID: <span id="walletIdText">P54-12847</span>
-            </p>
-            <p class="wallet-meta">
-              Tier: <span class="pill pill-green" id="walletTier">Tier 2 (BVN verified)</span>
-            </p>
-          </div>
-          <div class="balance-side">
-            <button type="button" class="btn-ghost" id="btnRefreshBalance">🔄 Refresh</button>
-            <p class="fx-note">
-              FX toggle at checkout • NGN ⇄ USD ⇄ GBP.
-            </p>
-          </div>
-        </div>
-
-        <div class="banner-row">
-          <div class="banner banner-sec">
-            <span class="banner-icon">🔒</span>
-            <div>
-              <p class="banner-title">Security Envelope</p>
-              <p class="banner-text">
-                Device binding & AI Risk Watch protect every payment.
-              </p>
-            </div>
-          </div>
-          <div class="banner banner-fx">
-            <span class="banner-icon">💹</span>
-            <div>
-              <p class="banner-title">Signals & Yields</p>
-              <p class="banner-text">
-                Mock FX rates & savings yields for demo only.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- MONEY MOVES -->
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Money Moves</h2>
-        </div>
-        <div class="grid-actions">
-          <button type="button" class="action-card" id="mmSend">
-            <span class="action-emoji">💸</span>
-            <span class="action-title">Send Money</span>
-            <span class="action-sub">P54 • Bank • Contact</span>
+        <div class="balance-actions">
+          <button class="btn btn-secondary" data-action="add-money">
+            Add / Withdraw
           </button>
-          <button type="button" class="action-card" id="mmReceive">
-            <span class="action-emoji">📥</span>
-            <span class="action-title">Receive Money</span>
-            <span class="action-sub">Wallet ID • QR • Link</span>
-          </button>
-          <button type="button" class="action-card" id="mmAddWithdraw">
-            <span class="action-emoji">➕</span>
-            <span class="action-title">Add / Withdraw</span>
-            <span class="action-sub">Bank • Card • Agent</span>
-          </button>
-          <button type="button" class="action-card" id="mmBankTransfer">
-            <span class="action-emoji">🏦</span>
-            <span class="action-title">Bank Transfer</span>
-            <span class="action-sub">NG Banks (NUBAN)</span>
-          </button>
-          <button type="button" class="action-card" id="mmRequest">
-            <span class="action-emoji">📨</span>
-            <span class="action-title">Request Money</span>
-            <span class="action-sub">Send payment request</span>
-          </button>
-          <button type="button" class="action-card" id="mmFX">
-            <span class="action-emoji">💱</span>
-            <span class="action-title">Currency Exchange</span>
-            <span class="action-sub">NGN ⇄ USD ⇄ GBP</span>
+          <button class="btn" data-action="send-money">
+            Send money
           </button>
         </div>
-      </section>
-
-      <!-- SERVICES -->
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Services</h2>
-        </div>
-        <div class="grid-services">
-          <button type="button" class="service-card" id="svcCrossBorder">
-            <span class="svc-emoji">🌍</span>
-            <span class="svc-title">Cross-Border Remittance</span>
-            <span class="svc-sub">Send FX to UK, US, EU (demo)</span>
-          </button>
-          <button type="button" class="service-card" id="svcSavings">
-            <span class="svc-emoji">💰</span>
-            <span class="svc-title">Savings & Goals</span>
-            <span class="svc-sub">Create pots, track progress</span>
-          </button>
-          <button type="button" class="service-card" id="svcBills">
-            <span class="svc-emoji">💡</span>
-            <span class="svc-title">Pay Bills & Top-Up</span>
-            <span class="svc-sub">Airtime, Data, Power, TV</span>
-          </button>
-          <button type="button" class="service-card" id="svcCards">
-            <span class="svc-emoji">💳</span>
-            <span class="svc-title">Virtual & Linked Cards</span>
-            <span class="svc-sub">Default card, freeze, mock</span>
-          </button>
-          <button type="button" class="service-card" id="svcPayOnline">
-            <span class="svc-emoji">🛒</span>
-            <span class="svc-title">PAY54 Smart Checkout</span>
-            <span class="svc-sub">Demo checkout summary</span>
-          </button>
-          <button type="button" class="service-card" id="svcShop">
-            <span class="svc-emoji">🏬</span>
-            <span class="svc-title">Shop on the Fly</span>
-            <span class="svc-sub">Taxi • Food • Tickets • Shop</span>
-          </button>
-          <button type="button" class="service-card" id="svcInvest">
-            <span class="svc-emoji">📈</span>
-            <span class="svc-title">Investments & Stocks</span>
-            <span class="svc-sub">Mock portfolio, buy/sell</span>
-          </button>
-          <button type="button" class="service-card" id="svcAgent">
-            <span class="svc-emoji">🧍‍♂️</span>
-            <span class="svc-title">Become an Agent</span>
-            <span class="svc-sub">NIN • Business • Selfie</span>
-          </button>
-          <button type="button" class="service-card" id="svcBet">
-            <span class="svc-emoji">🎯</span>
-            <span class="svc-title">Bet Funding</span>
-            <span class="svc-sub">Bet9ja, 1xBet (demo)</span>
-          </button>
-          <button type="button" class="service-card" id="svcAI">
-            <span class="svc-emoji">🤖</span>
-            <span class="svc-title">AI Risk Watch</span>
-            <span class="svc-sub">Flags risky behaviour (mock)</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- RECENT TRANSACTIONS -->
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Recent Transactions</h2>
-          <button type="button" class="link-btn" id="btnViewAllTx">View all (demo)</button>
-        </div>
-        <div class="tx-list" id="txList">
-          <!-- Filled by dashboard.js -->
-        </div>
-      </section>
+      </div>
     </section>
 
-    <!-- RIGHT COLUMN -->
-    <aside class="dash-right">
-      <!-- REQUESTS / NOTIFICATIONS -->
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Requests & Alerts</h2>
+    <!-- MAIN FEATURES GRID -->
+    <section class="section" style="margin-top: 1.4rem;">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Wallet actions</h2>
+          <p class="section-subtitle">
+            Everyday payments and cross-border money movement.
+          </p>
         </div>
-        <div id="requestsList" class="requests-list">
-          <!-- Filled by dashboard.js -->
-          <p class="muted small">No active requests. Create one via “Request Money”.</p>
-        </div>
-      </section>
+      </div>
 
-      <!-- QUICK SHORTCUTS -->
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Quick Shortcuts</h2>
+      <div class="features-grid">
+        <div class="feature-card" data-action="send-money">
+          <div class="feature-icon">⇄</div>
+          <div class="feature-title">Send</div>
+          <div class="feature-subtitle">
+            To PAY54, bank, or mobile money.
+          </div>
         </div>
-        <div class="quick-shortcuts">
-          <button type="button" class="chip" id="qsAirtime">📱 Airtime</button>
-          <button type="button" class="chip" id="qsData">📶 Data</button>
-          <button type="button" class="chip" id="qsFX">💱 FX</button>
-          <button type="button" class="chip" id="qsCardControls">💳 Card controls</button>
+
+        <div class="feature-card" data-action="receive-money">
+          <div class="feature-icon">⬤</div>
+          <div class="feature-title">Receive</div>
+          <div class="feature-subtitle">
+            Get paid via link, QR, or bank.
+          </div>
         </div>
-      </section>
-    </aside>
+
+        <div class="feature-card" data-action="add-money">
+          <div class="feature-icon">＋</div>
+          <div class="feature-title">Add money</div>
+          <div class="feature-subtitle">
+            Cards, bank transfer, mobile money.
+          </div>
+        </div>
+
+        <div class="feature-card" data-action="fx">
+          <div class="feature-icon">₦/£</div>
+          <div class="feature-title">FX &amp; Cross-border</div>
+          <div class="feature-subtitle">
+            Swap currencies &amp; send abroad.
+          </div>
+        </div>
+
+        <div class="feature-card" data-action="shop-on-the-fly">
+          <div class="feature-icon">🛒</div>
+          <div class="feature-title">Shop on the fly</div>
+          <div class="feature-subtitle">
+            Pay online instantly with wallet.
+          </div>
+        </div>
+
+        <div class="feature-card" data-action="bills-airtime">
+          <div class="feature-icon">📶</div>
+          <div class="feature-title">Bills &amp; Airtime</div>
+          <div class="feature-subtitle">
+            Top up data, power &amp; TV in seconds.
+          </div>
+        </div>
+
+        <div class="feature-card" data-action="invest-stocks">
+          <div class="feature-icon">📈</div>
+          <div class="feature-title">Invest &amp; stocks</div>
+          <div class="feature-subtitle">
+            Micro-investments from your wallet.
+          </div>
+        </div>
+
+        <div class="feature-card" data-action="virtual-cards">
+          <div class="feature-icon">💳</div>
+          <div class="feature-title">Virtual &amp; linked cards</div>
+          <div class="feature-subtitle">
+            Create cards, link bank / mobile money.
+          </div>
+        </div>
+
+        <div class="feature-card" data-action="savings">
+          <div class="feature-icon">💰</div>
+          <div class="feature-title">Savings &amp; goals</div>
+          <div class="feature-subtitle">
+            Lock pots, targets &amp; auto-save.
+          </div>
+        </div>
+
+        <div class="feature-card" data-action="agent-network">
+          <div class="feature-icon">🤝</div>
+          <div class="feature-title">Become an agent</div>
+          <div class="feature-subtitle">
+            Earn by onboarding users &amp; merchants.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK SERVICES -->
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Quick services</h2>
+          <p class="section-subtitle">
+            Your most used actions, one tap away.
+          </p>
+        </div>
+      </div>
+      <div class="quick-services" id="quickServices">
+        <button class="quick-chip" data-action="buy-airtime">Buy airtime</button>
+        <button class="quick-chip" data-action="buy-data">Buy data</button>
+        <button class="quick-chip" data-action="pay-electricity">Pay electricity</button>
+        <button class="quick-chip" data-action="pay-tv">Pay TV subscription</button>
+        <button class="quick-chip" data-action="betting-wallet">Fund betting wallet</button>
+        <button class="quick-chip" data-action="transport-topup">Top up transport</button>
+      </div>
+    </section>
+
+    <!-- RECENT TRANSACTIONS (MOCK) -->
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Recent activity</h2>
+          <p class="section-subtitle">
+            Live feed of your latest PAY54 moves.
+          </p>
+        </div>
+        <a href="#" id="viewAllActivity">View all</a>
+      </div>
+
+      <div class="tx-list" id="txList">
+        <div class="tx-row">
+          <div class="tx-left">
+            <span class="tx-title">Sent to Ebbsfleet FC U13 fees</span>
+            <span class="tx-meta">Today • Wallet → Bank transfer</span>
+          </div>
+          <span class="tx-amount-negative">-£75.00</span>
+        </div>
+        <div class="tx-row">
+          <div class="tx-left">
+            <span class="tx-title">FX swap ₦ → £</span>
+            <span class="tx-meta">Yesterday • FX rails</span>
+          </div>
+          <span class="tx-amount-positive">+£220.00</span>
+        </div>
+        <div class="tx-row">
+          <div class="tx-left">
+            <span class="tx-title">Netflix UK subscription</span>
+            <span class="tx-meta">2 days ago • Virtual card</span>
+          </div>
+          <span class="tx-amount-negative">-£15.99</span>
+        </div>
+      </div>
+    </section>
   </main>
-
-  <!-- ============= MODALS (STRUCTURE ONLY — LOGIC IN dashboard.js) ============= -->
-
-  <!-- Generic modal overlay -->
-  <div id="modalOverlay" class="modal-overlay hidden">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 id="modalTitle">Modal title</h3>
-        <button type="button" id="modalCloseBtn" class="modal-close">✕</button>
-      </div>
-      <div class="modal-body" id="modalBody">
-        <!-- Filled dynamically -->
-      </div>
-      <div class="modal-footer" id="modalFooter">
-        <!-- Filled dynamically -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast -->
-  <div id="toast" class="toast hidden"></div>
-
-  <!-- Scripts -->
-  <script src="src/js/session.js"></script>
-  <script src="src/js/dashboard.js"></script>
 </body>
 </html>

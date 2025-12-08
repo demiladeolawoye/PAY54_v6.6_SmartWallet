@@ -1,10 +1,9 @@
-// session.js
-// Simple front-end session handling using localStorage
+// session.js - non-module safe version for GitHub Pages
 
 const PAY54_USER_KEY = "pay54User";
 const PAY54_LOGGED_IN_KEY = "pay54LoggedIn";
 
-export function getCurrentUser() {
+function getCurrentUser() {
   try {
     const raw = localStorage.getItem(PAY54_USER_KEY);
     return raw ? JSON.parse(raw) : null;
@@ -14,11 +13,11 @@ export function getCurrentUser() {
   }
 }
 
-export function setCurrentUser(userObj) {
+function setCurrentUser(userObj) {
   localStorage.setItem(PAY54_USER_KEY, JSON.stringify(userObj));
 }
 
-export function setLoggedIn(flag) {
+function setLoggedIn(flag) {
   if (flag) {
     localStorage.setItem(PAY54_LOGGED_IN_KEY, "true");
   } else {
@@ -26,32 +25,26 @@ export function setLoggedIn(flag) {
   }
 }
 
-export function isLoggedIn() {
+function isLoggedIn() {
   return localStorage.getItem(PAY54_LOGGED_IN_KEY) === "true";
 }
 
-// Only call this from protected pages like dashboard.html
-export function ensureAuthenticated() {
+function ensureAuthenticated() {
   if (!isLoggedIn()) {
     window.location.href = "login.html";
   }
 }
 
-// Simple logout helper
-export function logout() {
+function logout() {
   setLoggedIn(false);
-  // KEEP the stored user so they can log in again
   window.location.href = "login.html";
 }
 
-// Fallback so we can use in normal <script> tags without modules
-if (typeof window !== "undefined") {
-  window.PAY54Session = {
-    getCurrentUser,
-    setCurrentUser,
-    setLoggedIn,
-    isLoggedIn,
-    ensureAuthenticated,
-    logout,
-  };
-}
+window.PAY54Session = {
+  getCurrentUser,
+  setCurrentUser,
+  setLoggedIn,
+  isLoggedIn,
+  ensureAuthenticated,
+  logout,
+};

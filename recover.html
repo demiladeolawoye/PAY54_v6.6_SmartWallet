@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PAY54 – Recover wallet PIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Recover your PAY54 wallet PIN securely in a few steps."
+  />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <script src="js/session.js" defer></script>
+  <script src="js/auth.js" defer></script>
+</head>
+<body>
+  <div class="page-shell auth-shell">
+    <div class="card">
+      <div class="card-header">
+        <div class="brand-logo">
+          <img src="assets/pay54-logo.svg" alt="PAY54 logo" />
+          <span class="brand-name">PAY54</span>
+        </div>
+        <span class="chip">Recover PIN</span>
+      </div>
+
+      <div class="card-body">
+        <div class="stepper">
+          <div class="step active">
+            <div class="step-indicator">1</div>
+            <div class="step-label">Identify</div>
+          </div>
+          <div class="step">
+            <div class="step-indicator">2</div>
+            <div class="step-label">Verify</div>
+          </div>
+          <div class="step">
+            <div class="step-indicator">3</div>
+            <div class="step-label">Reset PIN</div>
+          </div>
+        </div>
+
+        <h1 class="card-title">Let’s find your wallet</h1>
+        <p class="card-subtitle">
+          Enter the email or phone linked to your PAY54 wallet. We’ll send a
+          one-time code to verify it’s you.
+        </p>
+
+        <form id="recoverForm" style="margin-top: 1rem;">
+          <div class="input-group">
+            <label class="input-label" for="recover-identifier">
+              Email or mobile number
+            </label>
+            <div class="input-wrapper">
+              <input
+                id="recover-identifier"
+                class="input-field"
+                type="text"
+                placeholder="you@example.com or +44 7xxx xxx xxx"
+                required
+              />
+            </div>
+            <div id="recoverInfo" class="text-success" style="display:none;"></div>
+            <div id="recoverError" class="text-error" style="display:none;"></div>
+          </div>
+
+          <button type="submit" class="btn" style="margin-top: 0.5rem;">
+            Send verification code
+          </button>
+
+          <div class="auth-footnote">
+            Remember your PIN?
+            <a href="login.html">Back to sign in</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

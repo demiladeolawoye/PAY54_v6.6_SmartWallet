@@ -1,157 +1,229 @@
-// src/js/auth.js
-// Handles PAY54 signup + login using localStorage
+// auth.js
+// Handles: signup, login, recover, verify, and PIN eye toggle
 
 (function () {
-  const STORAGE_USER = "pay54_user";
-  const STORAGE_SESSION = "pay54_session";
+  const session = window.PAY54Session;
 
-  function getUser() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_USER)) || null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function saveUser(user) {
-    localStorage.setItem(STORAGE_USER, JSON.stringify(user));
-  }
-
-  function setSession(active, id) {
-    const session = {
-      active,
-      id: id || null,
-      loggedInAt: active ? Date.now() : null,
-    };
-    localStorage.setItem(STORAGE_SESSION, JSON.stringify(session));
-  }
-
-  function getSession() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_SESSION)) || null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  // ---------- SIGNUP HANDLER ----------
-  function handleSignupSubmit(e) {
-    e.preventDefault();
-
-    const nameEl = document.getElementById("signupName");
-    const idEl = document.getElementById("signupId");
-    const pinEl = document.getElementById("signupPin");
-    const pin2El = document.getElementById("signupPinConfirm");
-
-    if (!nameEl || !idEl || !pinEl || !pin2El) return;
-
-    const fullName = nameEl.value.trim();
-    const identifier = idEl.value.trim();
-    const pin = pinEl.value.trim();
-    const pin2 = pin2El.value.trim();
-
-    if (!fullName || !identifier || !pin || !pin2) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    if (!/^\d{4}$/.test(pin)) {
-      alert("PIN must be exactly 4 digits.");
-      return;
-    }
-
-    if (pin !== pin2) {
-      alert("PINs do not match. Please try again.");
-      return;
-    }
-
-    const user = {
-      fullName,
-      id: identifier,
-      pin,
-      balance: 12500, // demo starting balance
-      createdAt: new Date().toISOString(),
-    };
-
-    saveUser(user);
-    setSession(true, user.id);
-
-    alert("✅ PAY54 account created successfully (demo).");
-    window.location.href = "dashboard.html";
-  }
-
-  // ---------- LOGIN HANDLER ----------
-  function handleLoginSubmit(e) {
-    e.preventDefault();
-
-    const idEl = document.getElementById("loginId");
-    const pinEl = document.getElementById("loginPin");
-
-    if (!idEl || !pinEl) return;
-
-    const identifier = idEl.value.trim();
-    const pin = pinEl.value.trim();
-
-    if (!identifier || !pin) {
-      alert("Enter your email/phone and PIN.");
-      return;
-    }
-
-    const user = getUser();
-    if (!user) {
-      alert("No PAY54 account found on this device. Please sign up first.");
-      window.location.href = "signup.html";
-      return;
-    }
-
-    if (user.id === identifier && user.pin === pin) {
-      setSession(true, user.id);
-      alert("✅ Login successful (demo). Redirecting to dashboard…");
-      window.location.href = "dashboard.html";
-    } else {
-      alert("❌ Incorrect login details. Please check your ID and PIN.");
-    }
-  }
-
-  // ---------- FORGOT PIN ----------
-  function handleForgotPinClick() {
-    // simple demo: redirect to verify page (you already have verify.html)
-    alert(
-      "Demo flow: we would normally ask for your email/phone, send an OTP and request a selfie. Redirecting to verification page mock."
-    );
-    window.location.href = "verify.html";
-  }
-
-  // ---------- INIT ----------
   document.addEventListener("DOMContentLoaded", () => {
-    const signupForm = document.getElementById("signupForm");
-    const loginForm = document.getElementById("loginForm");
-    const forgotPinBtn = document.getElementById("forgotPinBtn");
-
-    if (signupForm) {
-      signupForm.addEventListener("submit", handleSignupSubmit);
-    }
-
-    if (loginForm) {
-      loginForm.addEventListener("submit", handleLoginSubmit);
-    }
-
-    if (forgotPinBtn) {
-      forgotPinBtn.addEventListener("click", handleForgotPinClick);
-    }
-
-    // Optional: if session already active and user opens login/signup manually
-    const sess = getSession();
-    const user = getUser();
-    const path = window.location.pathname;
-
-    const onAuthPage =
-      path.endsWith("login.html") || path.endsWith("signup.html") || path.endsWith("/");
-
-    if (onAuthPage && sess && sess.active && user) {
-      // Already "logged in" in this demo → send to dashboard
-      // Comment this block out if you want to force login every time
-      // window.location.href = "dashboard.html";
-    }
+    wirePinToggles();
+    wireSignupForm();
+    wireLoginForm();
+    wireRecoverForm();
+    wireVerifyForm();
   });
+
+  function wirePinToggles() {
+    const toggles = document.querySelectorAll(".toggle-pin");
+    toggles.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const wrapper = btn.closest(".input-wrapper");
+        if (!wrapper) return;
+        const input = wrapper.querySelector("input");
+        if (!input) return;
+
+        const isPassword = input.type === "password";
+        input.type = isPassword ? "text" : "password";
+      });
+    });
+  }
+
+  function wireSignupForm() {
+    const form = document.getElementById("signupForm");
+    if (!form) return;
+
+    const nameInput = document.getElementById("signup-name");
+    const emailInput = document.getElementById("signup-email");
+    const phoneInput = document.getElementById("signup-phone");
+    const pinInput = document.getElementById("signup-pin");
+    const errorBox = document.getElementById("signupError");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!nameInput || !emailInput || !phoneInput || !pinInput) return;
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const pin = pinInput.value.trim();
+
+      if (pin.length < 4 || pin.length > 6) {
+        showError(errorBox, "PIN must be between 4 and 6 digits.");
+        return;
+      }
+
+      const user = {
+        fullName: name,
+        email,
+        phone,
+        pin,
+        createdAt: new Date().toISOString(),
+      };
+
+      session.setCurrentUser(user);
+      session.setLoggedIn(true);
+
+      window.location.href = "dashboard.html";
+    });
+  }
+
+  function wireLoginForm() {
+    const form = document.getElementById("loginForm");
+    if (!form) return;
+
+    const identifierInput = document.getElementById("login-identifier");
+    const pinInput = document.getElementById("login-pin");
+    const errorBox = document.getElementById("loginError");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const user = session.getCurrentUser();
+
+      if (!user) {
+        showError(
+          errorBox,
+          "No PAY54 wallet found. Please create a wallet first."
+        );
+        return;
+      }
+
+      const identifier = (identifierInput.value || "").trim().toLowerCase();
+      const pin = (pinInput.value || "").trim();
+
+      const matchesIdentifier =
+        identifier === user.email?.toLowerCase() ||
+        identifier === user.phone?.toLowerCase() ||
+        identifier === user.fullName?.toLowerCase();
+
+      if (!matchesIdentifier || pin !== user.pin) {
+        showError(errorBox, "Invalid details. Please check your ID and PIN.");
+        return;
+      }
+
+      session.setLoggedIn(true);
+      window.location.href = "dashboard.html";
+    });
+  }
+
+  function wireRecoverForm() {
+    const form = document.getElementById("recoverForm");
+    if (!form) return;
+
+    const identifierInput = document.getElementById("recover-identifier");
+    const infoBox = document.getElementById("recoverInfo");
+    const errorBox = document.getElementById("recoverError");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const identifier = (identifierInput.value || "").trim();
+
+      if (!identifier) {
+        showError(errorBox, "Please enter your email or mobile number.");
+        return;
+      }
+
+      // Save the context of who is recovering
+      const user = session.getCurrentUser();
+      if (!user) {
+        showError(
+          errorBox,
+          "We could not find a PAY54 wallet on this device. Please sign up again."
+        );
+        return;
+      }
+
+      // For demo: we use a static code 123456
+      const RECOVERY_CODE = "123456";
+      sessionStorage.setItem("pay54RecoveryIdentifier", identifier);
+      sessionStorage.setItem("pay54RecoveryCode", RECOVERY_CODE);
+
+      showInfo(
+        infoBox,
+        "A 6-digit code has been 'sent'. For demo, use 123456 on the next screen."
+      );
+
+      setTimeout(() => {
+        window.location.href = "verify.html";
+      }, 800);
+    });
+  }
+
+  function wireVerifyForm() {
+    const form = document.getElementById("verifyForm");
+    if (!form) return;
+
+    const codeInput = document.getElementById("verify-code");
+    const newPinInput = document.getElementById("new-pin");
+    const confirmPinInput = document.getElementById("confirm-pin");
+    const errorBox = document.getElementById("verifyError");
+    const infoBox = document.getElementById("verifyInfo");
+    const subtitle = document.getElementById("verifySubtitle");
+
+    // Show who we are resetting for (if stored)
+    const identifier = sessionStorage.getItem("pay54RecoveryIdentifier");
+    if (identifier && subtitle) {
+      subtitle.textContent =
+        "We’ve sent a 6-digit code to " +
+        identifier +
+        ". Use it below to reset your PIN.";
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const storedCode = sessionStorage.getItem("pay54RecoveryCode") || "123456";
+      const code = (codeInput.value || "").trim();
+      const newPin = (newPinInput.value || "").trim();
+      const confirmPin = (confirmPinInput.value || "").trim();
+
+      if (code !== storedCode) {
+        showError(errorBox, "Incorrect code. Please check and try again.");
+        return;
+      }
+
+      if (newPin.length < 4 || newPin.length > 6) {
+        showError(errorBox, "PIN must be between 4 and 6 digits.");
+        return;
+      }
+
+      if (newPin !== confirmPin) {
+        showError(errorBox, "PINs do not match.");
+        return;
+      }
+
+      const user = session.getCurrentUser();
+      if (!user) {
+        showError(
+          errorBox,
+          "We could not find a PAY54 wallet on this device. Please sign up again."
+        );
+        return;
+      }
+
+      user.pin = newPin;
+      session.setCurrentUser(user);
+      session.setLoggedIn(true);
+
+      showInfo(infoBox, "PIN updated successfully. Redirecting to dashboard…");
+
+      // Clean up recovery context
+      sessionStorage.removeItem("pay54RecoveryIdentifier");
+      sessionStorage.removeItem("pay54RecoveryCode");
+
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 900);
+    });
+  }
+
+  function showError(el, msg) {
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = "block";
+  }
+
+  function showInfo(el, msg) {
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = "block";
+  }
 })();

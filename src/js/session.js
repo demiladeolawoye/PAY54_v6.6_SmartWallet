@@ -1,50 +1,20 @@
-// session.js - non-module safe version for GitHub Pages
+// assets/js/session.js – simple redirect control for PAY54 demo
 
-const PAY54_USER_KEY = "pay54User";
-const PAY54_LOGGED_IN_KEY = "pay54LoggedIn";
+function sessionActive() {
+  return localStorage.getItem("pay54_session_active") === "1";
+}
 
-function getCurrentUser() {
-  try {
-    const raw = localStorage.getItem(PAY54_USER_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    console.error("Error parsing PAY54 user:", e);
-    return null;
+// Protect dashboard: if no session, go to login
+if (window.location.pathname.endsWith("dashboard.html")) {
+  if (!sessionActive()) {
+    window.location.href = "index.html";
   }
 }
 
-function setCurrentUser(userObj) {
-  localStorage.setItem(PAY54_USER_KEY, JSON.stringify(userObj));
-}
-
-function setLoggedIn(flag) {
-  if (flag) {
-    localStorage.setItem(PAY54_LOGGED_IN_KEY, "true");
-  } else {
-    localStorage.removeItem(PAY54_LOGGED_IN_KEY);
+// Optional: prevent logged-in users from seeing login page
+if (window.location.pathname.endsWith("index.html")) {
+  if (sessionActive()) {
+    // already logged in – go straight to dashboard
+    // window.location.href = "dashboard.html";
   }
 }
-
-function isLoggedIn() {
-  return localStorage.getItem(PAY54_LOGGED_IN_KEY) === "true";
-}
-
-function ensureAuthenticated() {
-  if (!isLoggedIn()) {
-    window.location.href = "login.html";
-  }
-}
-
-function logout() {
-  setLoggedIn(false);
-  window.location.href = "login.html";
-}
-
-window.PAY54Session = {
-  getCurrentUser,
-  setCurrentUser,
-  setLoggedIn,
-  isLoggedIn,
-  ensureAuthenticated,
-  logout,
-};
